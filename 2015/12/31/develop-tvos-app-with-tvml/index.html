@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next  ">
 <head>
   
 
@@ -622,10 +622,7 @@
   <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
   
 
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
-
-  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+  <script type="text/javascript" src="/js/motion_fallback.js?v=0.4.5.2" id="motion.fallback"></script>
 
 
 
@@ -784,12 +781,8 @@
 
     // Expand sidebar on post detail page by default, when post has a toc.
     var $tocContent = $('.post-toc-content');
-    alert($tocContent);
-    alert(CONFIG.sidebar);
-    alert(isDesktop());
-    if (CONFIG.sidebar === 'post' || CONFIG.sidebar === 'always') {
+    if (isDesktop() && CONFIG.sidebar === 'post') {
       if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
-        alert("enter!");
         displaySidebar();
       }
     }
