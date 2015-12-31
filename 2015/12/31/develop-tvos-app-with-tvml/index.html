@@ -787,7 +787,7 @@
     alert($tocContent);
     alert(CONFIG.sidebar);
     alert(isDesktop());
-    if (isDesktop() && CONFIG.sidebar === 'post') {
+    if (CONFIG.sidebar === 'post' || CONFIG.sidebar === 'always') {
       if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
         alert("enter!");
         displaySidebar();
