@@ -595,73 +595,270 @@
 <li>程序代码区：这个区域主要存放函数体的二进制代码。</li>
 </ul>
 <p>下面举一个前辈写的例子：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">   <span class="comment">//main.cpp</span></span><br><span class="line">   int a = <span class="number">0</span>; <span class="comment">// 全局初始化区</span></span><br><span class="line">char *p1; <span class="comment">// 全局未初始化区</span></span><br><span class="line">main &#123;</span><br><span class="line">	int b; <span class="comment">// 栈</span></span><br><span class="line">	char s[] = <span class="string">"abc"</span>; <span class="comment">// 栈</span></span><br><span class="line">	char *p2; <span class="comment">// 栈</span></span><br><span class="line">	char *p3 = <span class="string">"123456"</span>; <span class="comment">// 123456\0在常量区，p3在栈上</span></span><br><span class="line">	<span class="keyword">static</span> int <span class="built_in">c</span> =<span class="number">0</span>； <span class="comment">// 全局静态初始化区</span></span><br><span class="line">	p1 = (char *)malloc(<span class="number">10</span>);</span><br><span class="line">	p2 = (char *)malloc(<span class="number">20</span>); <span class="comment">// 分配得来的10和20字节的区域就在堆区</span></span><br><span class="line">	strcpy(p1, <span class="string">"123456"</span>); <span class="comment">// 123456\0在常量区，这个函数的作用是将"123456" 这串字符串复制一份放在p1申请的10个字节的堆区域中。</span></span><br><span class="line">	<span class="comment">// p3指向的"123456"与这里的"123456"可能会被编译器优化成一个地址。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
+<pre><code>//main.cpp
+int a = 0; // 全局初始化区
+char *p1; // 全局未初始化区
+main {
+    int b; // 栈
+    char s[] = &quot;abc&quot;; // 栈
+    char *p2; // 栈
+    char *p3 = &quot;123456&quot;; // 123456\0在常量区，p3在栈上
+    static int c =0； // 全局静态初始化区
+    p1 = (char *)malloc(10);
+    p2 = (char *)malloc(20); // 分配得来的10和20字节的区域就在堆区
+    strcpy(p1, &quot;123456&quot;); // 123456\0在常量区，这个函数的作用是将&quot;123456&quot; 这串字符串复制一份放在p1申请的10个字节的堆区域中。
+    // p3指向的&quot;123456&quot;与这里的&quot;123456&quot;可能会被编译器优化成一个地址。
+}
+</code></pre><blockquote>
 <p>strcpy函数<br>原型声明：<code>extern char *strcpy(char* dest, const char *src);</code><br>功能：把从src地址开始且含有NULL结束符的字符串复制到以dest开始的地址空间。</p>
 </blockquote>
 <h2 id="u7ED3_u6784_u4F53_uFF08Struct_uFF09"><a href="#u7ED3_u6784_u4F53_uFF08Struct_uFF09" class="headerlink" title="结构体（Struct）"></a>结构体（Struct）</h2><p>在C语言中，结构体(struct)指的是一种数据结构。结构体可以被声明为变量、指针或数组等，用以实现较复杂的数据结构。结构体同时也是一些元素的集合，这些元素称为结构体的成员(member)，且这些成员可以为不同的类型，成员一般用名字访问。<br>我们来看看结构体的定义： </p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tag</span> </span>&#123; member-list &#125; variable-list;</span><br></pre></td></tr></table></figure>
-<ul>
+<pre><code>struct tag { member-list } variable-list;
+</code></pre><ul>
 <li><code>struct</code>：结构体关键字。</li>
 <li><code>tag</code>：结构体标签。</li>
 <li><code>member-list</code>：结构体成员列表。</li>
 <li><code>variable-list</code>：为结构体声明的变量列表。</li>
 </ul>
 <p>在一般情况下，<code>tag</code>，<code>member-list</code>，<code>variable-list</code>这三部分至少要出现两个。以下为示例：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">   <span class="comment">// 该结构体拥有3个成员，整型的a，字符型的b，双精度型的c</span></span><br><span class="line"><span class="comment">// 并且为该结构体声明了一个变量s1</span></span><br><span class="line"><span class="comment">// 该结构体没有标明其标签</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span></span>&#123;</span><br><span class="line">	int a;</span><br><span class="line">	char b;</span><br><span class="line">	double <span class="built_in">c</span>;</span><br><span class="line">&#125; s1;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 该结构体拥有同样的三个成员</span></span><br><span class="line"><span class="comment">// 并且该结构体标明了标签EXAMPLE</span></span><br><span class="line"><span class="comment">// 该结构体没有声明变量</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">EXAMPLE</span></span>&#123;</span><br><span class="line">	int a;</span><br><span class="line">	char b;</span><br><span class="line">	double <span class="built_in">c</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//用EXAMPLE标签的结构体，另外声明了变量t1、t2、t3</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">EXAMPLE</span> <span class="title">t1</span>, <span class="title">t2</span>[20], *<span class="title">t3</span>;</span></span><br></pre></td></tr></table></figure>
-<p>以上就是简单结构体的代码示例。结构体的成员可以包含其他结构体，也可以包含指向自己结构体类型的指针。结构体的变量也可以是指针。</p>
+<pre><code>// 该结构体拥有3个成员，整型的a，字符型的b，双精度型的c
+// 并且为该结构体声明了一个变量s1
+// 该结构体没有标明其标签
+struct{
+    int a;
+    char b;
+    double c;
+} s1;
+
+// 该结构体拥有同样的三个成员
+// 并且该结构体标明了标签EXAMPLE
+// 该结构体没有声明变量
+struct EXAMPLE{
+    int a;
+    char b;
+    double c;
+};
+
+//用EXAMPLE标签的结构体，另外声明了变量t1、t2、t3
+struct EXAMPLE t1, t2[20], *t3;
+</code></pre><p>以上就是简单结构体的代码示例。结构体的成员可以包含其他结构体，也可以包含指向自己结构体类型的指针。结构体的变量也可以是指针。</p>
 <p>下面我们来看看结构体成员的访问。结构体成员依据结构体变量类型的不同，一般有2种访问方式，一种为直接访问，一种为间接访问。直接访问应用于普通的结构体变量，间接访问应用于指向结构体变量的指针。直接访问使用结构体变量名.成员名，间接访问使用(*结构体指针名).成员名或者使用结构体指针名-&gt;成员名。相同的成员名称依靠不同的变量前缀区分。</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">EXAMPLE</span></span>&#123;</span><br><span class="line">	int a;</span><br><span class="line">	char b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//声明结构体变量s1和指向结构体变量的指针s2</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">EXAMPLE</span> <span class="title">s1</span>, *<span class="title">s2</span>;</span><br><span class="line"></span><br><span class="line">//给变量<span class="title">s1</span>和<span class="title">s2</span>的成员赋值,注意<span class="title">s1</span>.<span class="title">a</span>和<span class="title">s2</span>-&gt;<span class="title">a</span>并不是同一成员</span><br><span class="line"><span class="title">s1</span>.<span class="title">a</span> = 5;</span><br><span class="line"><span class="title">s1</span>.<span class="title">b</span> = 6;</span><br><span class="line"><span class="title">s2</span>-&gt;<span class="title">a</span> = 3;</span><br><span class="line"><span class="title">s2</span>-&gt;<span class="title">b</span> = 4;</span></span><br></pre></td></tr></table></figure>
-<p>最后我们来看看结构体成员存储。在内存中，编译器按照成员列表顺序分别为每个结构体成员分配内存。如果想确认结构体占多少存储空间，则使用关键字<code>sizeof</code>，如果想得知结构体的某个特定成员在结构体的位置，则使用<code>offsetof</code>宏(定义于stddef.h)。</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">EXAMPLE</span></span>&#123;</span><br><span class="line">   	int a;</span><br><span class="line">   	char b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获得EXAMPLE类型结构体所占内存大小</span></span><br><span class="line">int size_example = <span class="built_in">sizeof</span>( <span class="class"><span class="keyword">struct</span> <span class="title">EXAMPLE</span> );</span><br><span class="line"></span><br><span class="line">//获得成员<span class="title">b</span>相对于<span class="title">EXAMPLE</span>储存地址的偏移量</span><br><span class="line"><span class="title">int</span> <span class="title">offset_b</span> = <span class="title">offsetof</span>( <span class="title">struct</span> <span class="title">EXAMPLE</span>, <span class="title">b</span> );</span></span><br></pre></td></tr></table></figure>
-<h2 id="u95ED_u5305_uFF08Closure_uFF09"><a href="#u95ED_u5305_uFF08Closure_uFF09" class="headerlink" title="闭包（Closure）"></a>闭包（Closure）</h2><p>闭包就是一个函数，或者一个指向函数的指针，加上这个函数执行的非局部变量。<br>说的通俗一点，就是闭包允许一个函数访问声明该函数运行上下文中的变量，甚至可以访问不同运行上文中的变量。<br>我们用脚本语言来看一下：</p>
- <figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">   function funA(callback)&#123;</span><br><span class="line">	alert(callback());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function funB()&#123;</span><br><span class="line">	<span class="keyword">var</span> str = <span class="string">"Hello World"</span>; <span class="comment">// 函数funB的局部变量，函数funA的非局部变量</span></span><br><span class="line">	funA（</span><br><span class="line">		function（）&#123;</span><br><span class="line">			<span class="keyword">return</span> str;</span><br><span class="line">		&#125;</span><br><span class="line">	）；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>通过上面的代码我们可以看出，按常规思维来说，变量<code>str</code>是函数<code>funB</code>的局部变量，作用域只在函数<code>funB</code>中，函数<code>funA</code>是无法访问到<code>str</code>的。但是上述代码示例中函数<code>funA</code>中的<code>callbac</code>k可以访问到<code>str</code>，这是为什么呢，因为闭包性。</p>
+<pre><code>struct EXAMPLE{
+    int a;
+    char b;
+};
+
+//声明结构体变量s1和指向结构体变量的指针s2
+struct EXAMPLE s1, *s2;
+
+//给变量s1和s2的成员赋值,注意s1.a和s2-&gt;a并不是同一成员
+s1.a = 5;
+s1.b = 6;
+s2-&gt;a = 3;
+s2-&gt;b = 4;
+</code></pre><p>最后我们来看看结构体成员存储。在内存中，编译器按照成员列表顺序分别为每个结构体成员分配内存。如果想确认结构体占多少存储空间，则使用关键字<code>sizeof</code>，如果想得知结构体的某个特定成员在结构体的位置，则使用<code>offsetof</code>宏(定义于stddef.h)。</p>
+<pre><code>struct EXAMPLE{
+    int a;
+    char b;
+};
+
+//获得EXAMPLE类型结构体所占内存大小
+int size_example = sizeof( struct EXAMPLE );
+
+//获得成员b相对于EXAMPLE储存地址的偏移量
+int offset_b = offsetof( struct EXAMPLE, b );
+</code></pre><h2 id="u95ED_u5305_uFF08Closure_uFF09"><a href="#u95ED_u5305_uFF08Closure_uFF09" class="headerlink" title="闭包（Closure）"></a>闭包（Closure）</h2><p>闭包就是一个函数，或者一个指向函数的指针，加上这个函数执行的非局部变量。<br>说的通俗一点，就是闭包允许一个函数访问声明该函数运行上下文中的变量，甚至可以访问不同运行上文中的变量。<br>我们用脚本语言来看一下：</p>
+<pre><code>function funA(callback){
+    alert(callback());
+}
+
+function funB(){
+    var str = &quot;Hello World&quot;; // 函数funB的局部变量，函数funA的非局部变量
+    funA（
+        function（）{
+            return str;
+        }
+    ）；
+}
+</code></pre><p>通过上面的代码我们可以看出，按常规思维来说，变量<code>str</code>是函数<code>funB</code>的局部变量，作用域只在函数<code>funB</code>中，函数<code>funA</code>是无法访问到<code>str</code>的。但是上述代码示例中函数<code>funA</code>中的<code>callbac</code>k可以访问到<code>str</code>，这是为什么呢，因为闭包性。</p>
 <h1 id="block_u57FA_u7840_u77E5_u8BC6"><a href="#block_u57FA_u7840_u77E5_u8BC6" class="headerlink" title="block基础知识"></a>block基础知识</h1><p>block实际上就是Objective-C语言对闭包的实现。</p>
 <h2 id="block_u7684_u539F_u578B_u53CA_u5B9A_u4E49"><a href="#block_u7684_u539F_u578B_u53CA_u5B9A_u4E49" class="headerlink" title="block的原型及定义"></a>block的原型及定义</h2><p>我们来看看block的原型：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#10;NSString * ( ^ myBlock )( int );</span><br></pre></td></tr></table></figure>
-<p>上面的代码声明了一个block(^)原型，名字叫做<code>myBlock</code>，包含一个<code>int</code>型的参数，返回值为<code>NSString</code>类型的指针。</p>
+<pre><code>NSString * ( ^ myBlock )( int );
+</code></pre><p>上面的代码声明了一个block(^)原型，名字叫做<code>myBlock</code>，包含一个<code>int</code>型的参数，返回值为<code>NSString</code>类型的指针。</p>
 <p>下面来看看block的定义：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#10;myBlock = ^( int paramA )&#10;&#123;&#10;&#9;return [ NSString stringWithFormat: @&#34;Passed number: %i&#34;, paramA ];&#10;&#125;;</span><br></pre></td></tr></table></figure>
-<p>上面的代码中，将一个函数体赋值给了<code>myBlock</code>变量，其接收一个名为<code>paramA</code>的参数，返回一个<code>NSString</code>对象。</p>
+<pre><code>myBlock = ^( int paramA )
+{
+    return [ NSString stringWithFormat: @&quot;Passed number: %i&quot;, paramA ];
+};
+</code></pre><p>上面的代码中，将一个函数体赋值给了<code>myBlock</code>变量，其接收一个名为<code>paramA</code>的参数，返回一个<code>NSString</code>对象。</p>
 <blockquote>
 <p>注意：一定不要忘记block后面的分号。</p>
 </blockquote>
 <p>定义好block后，就可以像使用标准函数一样使用它了：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">	myBlock(<span class="number">7</span>);</span><br><span class="line">	</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">由于block数据类型的语法会降低整个代码的阅读性，所以常使用`typedef`来定义block类型。例如，下面的代码创建了`<span class="type">GetPersonEducationInfo</span>`和`<span class="type">GetPersonFamilyInfo</span>`两个新类型，这样我们就可以在下面的方法中使用更加有语义的数据类型。</span><br><span class="line"></span><br><span class="line">``` swift</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Person.h</span></span><br><span class="line">	#<span class="keyword">import</span> &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Define a new type for the block</span></span><br><span class="line">	typedef <span class="type">NSString</span> * (^<span class="type">GetPersonEducationInfo</span>)(<span class="type">NSString</span> *);</span><br><span class="line">	typedef <span class="type">NSString</span> * (^<span class="type">GetPersonFamilyInfo</span>)(<span class="type">NSString</span> *);</span><br><span class="line"></span><br><span class="line">	@interface <span class="type">Person</span> : <span class="type">NSObject</span></span><br><span class="line"></span><br><span class="line">	- (<span class="type">NSString</span> *)getPersonInfoWithEducation:(<span class="type">GetPersonEducationInfo</span>)educationInfo</span><br><span class="line">       	andFamily:(<span class="type">GetPersonFamilyInfo</span>)familyInfo;</span><br><span class="line"></span><br><span class="line">	@end</span><br></pre></td></tr></table></figure>
-<p>我们用一张大师文章里的图来总结一下block的结构：<br><img src="http://www.devtalking.com/postImages/block.png" alt="block"> </p>
-<p>##2.2 将block作为参数传递</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">// .h</span></span><br><span class="line">-(void) testBlock:( <span class="type">NSString</span> * ( ^ )( int ) )myBlock;</span><br><span class="line"></span><br><span class="line"><span class="comment">// .m</span></span><br><span class="line">-(void) testBlock:( <span class="type">NSString</span> * ( ^ )( int ) )myBlock</span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">NSLog</span>(@<span class="string">"Block returned: %@"</span>, myBlock(<span class="number">7</span>) );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>由于Objective-C是强制类型语言，所以作为函数参数的block也必须要指定返回值的类型，以及相关参数类型。</p>
-<p>##2.3 闭包性<br>上文说过，block实际是Objc对闭包的实现。<br>我们来看看下面代码：  </p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">#<span class="keyword">import</span> &lt;Cocoa/Cocoa.h&gt;</span><br><span class="line"></span><br><span class="line">void logBlock( int ( ^ theBlock )( void ) )</span><br><span class="line">&#123;</span><br><span class="line">   	<span class="type">NSLog</span>( @<span class="string">"Closure var X: %i"</span>, theBlock() );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main( void )</span><br><span class="line">&#123;</span><br><span class="line">   	<span class="type">NSAutoreleasePool</span> * pool;</span><br><span class="line">   	int ( ^ myBlock )( void );</span><br><span class="line">   	int x;</span><br><span class="line"></span><br><span class="line">   	pool = [ [ <span class="type">NSAutoreleasePool</span> alloc ] <span class="keyword">init</span> ];</span><br><span class="line">   	x = <span class="number">42</span>;</span><br><span class="line"></span><br><span class="line">   	myBlock = ^( void )</span><br><span class="line">   	&#123;</span><br><span class="line">       	<span class="keyword">return</span> x;</span><br><span class="line">   	&#125;;</span><br><span class="line"></span><br><span class="line">   	logBlock( myBlock );</span><br><span class="line"></span><br><span class="line">   	[ pool release ];</span><br><span class="line"></span><br><span class="line">   	<span class="keyword">return</span> <span class="type">EXIT_SUCCESS</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面的代码在<code>main</code>函数中声明了一个整型，并赋值42，另外还声明了一个block，该block会将42返回。然后将block传递给<code>logBlock</code>函数，该函数会显示出返回的值42。即使是在函数<code>logBlock</code>中执行block，而block又声明在<code>main</code>函数中，但是block仍然可以访问到<code>x</code>变量，并将这个值返回。</p>
+<pre><code>myBlock(7);
+</code></pre><p>由于block数据类型的语法会降低整个代码的阅读性，所以常使用<code>typedef</code>来定义block类型。例如，下面的代码创建了<code>GetPersonEducationInfo</code>和<code>GetPersonFamilyInfo</code>两个新类型，这样我们就可以在下面的方法中使用更加有语义的数据类型。</p>
+<pre><code>// Person.h
+#import &lt;Foundation/Foundation.h&gt;
+
+// Define a new type for the block
+typedef NSString * (^GetPersonEducationInfo)(NSString *);
+typedef NSString * (^GetPersonFamilyInfo)(NSString *);
+
+@interface Person : NSObject
+
+- (NSString *)getPersonInfoWithEducation:(GetPersonEducationInfo)educationInfo
+       andFamily:(GetPersonFamilyInfo)familyInfo;
+
+@end
+</code></pre><p>我们用一张大师文章里的图来总结一下block的结构：<br><img src="http://www.devtalking.com/postImages/block.png" alt="block"> </p>
+<h2 id="u5C06block_u4F5C_u4E3A_u53C2_u6570_u4F20_u9012"><a href="#u5C06block_u4F5C_u4E3A_u53C2_u6570_u4F20_u9012" class="headerlink" title="将block作为参数传递"></a>将block作为参数传递</h2><pre><code>// .h
+-(void) testBlock:( NSString * ( ^ )( int ) )myBlock;
+
+// .m
+-(void) testBlock:( NSString * ( ^ )( int ) )myBlock
+{
+    NSLog(@&quot;Block returned: %@&quot;, myBlock(7) );
+}
+</code></pre><p>由于Objective-C是强制类型语言，所以作为函数参数的block也必须要指定返回值的类型，以及相关参数类型。</p>
+<h2 id="u95ED_u5305_u6027"><a href="#u95ED_u5305_u6027" class="headerlink" title="闭包性"></a>闭包性</h2><p>上文说过，block实际是Objc对闭包的实现。<br>我们来看看下面代码：  </p>
+<pre><code>#import &lt;Cocoa/Cocoa.h&gt;
+
+void logBlock( int ( ^ theBlock )( void ) )
+{
+    NSLog( @&quot;Closure var X: %i&quot;, theBlock() );
+}
+
+int main( void )
+{
+    NSAutoreleasePool * pool;
+    int ( ^ myBlock )( void );
+    int x;
+
+    pool = [ [ NSAutoreleasePool alloc ] init ];
+    x = 42;
+
+    myBlock = ^( void )
+    {
+        return x;
+    };
+
+    logBlock( myBlock );
+
+    [ pool release ];
+
+    return EXIT_SUCCESS;
+}
+</code></pre><p>上面的代码在<code>main</code>函数中声明了一个整型，并赋值42，另外还声明了一个block，该block会将42返回。然后将block传递给<code>logBlock</code>函数，该函数会显示出返回的值42。即使是在函数<code>logBlock</code>中执行block，而block又声明在<code>main</code>函数中，但是block仍然可以访问到<code>x</code>变量，并将这个值返回。</p>
 <blockquote>
 <p>注意：block同样可以访问全局变量，即使是<code>static</code>。</p>
 </blockquote>
-<p>##2.4 block中变量的复制与修改<br>对于block外的变量引用，block默认是将其复制到其数据结构中来实现访问的，如下图：<br><img src="http://www.devtalking.com/postImages/block-capture-1.jpg" alt="copy variables"><br>通过block进行闭包的变量是<code>const</code>的。也就是说不能在block中直接修改这些变量。来看看当block试着增加<code>x</code>的值时，会发生什么：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">myBlock = ^( void )</span><br><span class="line">&#123;</span><br><span class="line">   	x++;</span><br><span class="line"></span><br><span class="line">   	<span class="keyword">return</span> x;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>编译器会报错，表明在block中变量<code>x</code>是只读的。<br>有时候确实需要在block中处理变量，怎么办？别着急，我们可以用<code>__block</code>关键字来声明变量，这样就可以在block中修改变量了。<br>基于之前的代码，给x变量添加<code>__block</code>关键字，如下：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">__block int x;</span><br></pre></td></tr></table></figure>
-<p>对于用<code>__block</code>修饰的外部变量引用，block是复制其引用地址来实现访问的，如下图：<br><img src="http://www.devtalking.com/postImages/block-capture-2.jpg" alt="ref variables"></p>
+<h2 id="block_u4E2D_u53D8_u91CF_u7684_u590D_u5236_u4E0E_u4FEE_u6539"><a href="#block_u4E2D_u53D8_u91CF_u7684_u590D_u5236_u4E0E_u4FEE_u6539" class="headerlink" title="block中变量的复制与修改"></a>block中变量的复制与修改</h2><p>对于block外的变量引用，block默认是将其复制到其数据结构中来实现访问的，如下图：<br><img src="http://www.devtalking.com/postImages/block-capture-1.jpg" alt="copy variables"><br>通过block进行闭包的变量是<code>const</code>的。也就是说不能在block中直接修改这些变量。来看看当block试着增加<code>x</code>的值时，会发生什么：</p>
+<pre><code>myBlock = ^( void )
+{
+    x++;
+
+    return x;
+};
+</code></pre><p>编译器会报错，表明在block中变量<code>x</code>是只读的。<br>有时候确实需要在block中处理变量，怎么办？别着急，我们可以用<code>__block</code>关键字来声明变量，这样就可以在block中修改变量了。<br>基于之前的代码，给x变量添加<code>__block</code>关键字，如下：</p>
+<pre><code>__block int x;
+</code></pre><p>对于用<code>__block</code>修饰的外部变量引用，block是复制其引用地址来实现访问的，如下图：<br><img src="http://www.devtalking.com/postImages/block-capture-2.jpg" alt="ref variables"></p>
 <p>#3.编译器中的block</p>
-<p>##3.1 block的数据结构定义<br>我们通过大师文章中的一张图来说明：<br><img src="http://www.devtalking.com/postImages/block-struct.jpg" alt="block struct"><br>上图这个结构是在栈中的结构，我们来看看对应的结构体定义：<br><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Block_descriptor</span> </span>&#123;</span><br><span class="line">    	unsigned long int reserved;</span><br><span class="line">    	unsigned long int size;</span><br><span class="line">    	void (*copy)(void *dst, void *src);</span><br><span class="line">    	void (*dispose)(void *);</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Block_layout</span> </span>&#123;</span><br><span class="line">    	void *isa;</span><br><span class="line">    	int flags;</span><br><span class="line">    	int reserved;</span><br><span class="line">    	void (*invoke)(void *, ...);</span><br><span class="line">    	<span class="class"><span class="keyword">struct</span> <span class="title">Block_descriptor</span> *<span class="title">descriptor</span>;</span><br><span class="line">    	/* <span class="title">Imported</span> <span class="title">variables</span>. */</span><br><span class="line">	&#125;;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">从上面代码看出，`<span class="title">Block_layout</span>`就是对<span class="title">block</span>结构体的定义：</span><br><span class="line"></span><br><span class="line">- `<span class="title">isa</span>`指针：指向表明该<span class="title">block</span>类型的类。</span><br><span class="line">- `<span class="title">flags</span>`：按<span class="title">bit</span>位表示一些<span class="title">block</span>的附加信息，比如判断<span class="title">block</span>类型、判断<span class="title">block</span>引用计数、判断<span class="title">block</span>是否需要执行辅助函数等。</span><br><span class="line">- `<span class="title">reserved</span>`：保留变量，我的理解是表示<span class="title">block</span>内部的变量数。</span><br><span class="line">- `<span class="title">invoke</span>`：函数指针，指向具体的<span class="title">block</span>实现的函数调用地址。</span><br><span class="line">- `<span class="title">descriptor</span>`：<span class="title">block</span>的附加描述信息，比如保留变量数、<span class="title">block</span>的大小、进行`<span class="title">copy</span>`或`<span class="title">dispose</span>`的辅助函数指针。</span><br><span class="line">- `<span class="title">variables</span>`：因为<span class="title">block</span>有闭包性，所以可以访问<span class="title">block</span>外部的局部变量。这些`<span class="title">variables</span>`就是复制到结构体中的外部局部变量或变量的地址。</span><br><span class="line"></span><br><span class="line">##3.2 <span class="title">block</span>的类型</span><br><span class="line"><span class="title">block</span>有几种不同的类型，每种类型都有对应的类，上述中`<span class="title">isa</span>`指针就是指向这个类。这里列出常见的三种类型：</span><br><span class="line"></span><br><span class="line">- `<span class="title">_NSConcreteGlobalBlock</span>`：全局的静态<span class="title">block</span>，不会访问任何外部变量，不会涉及到任何拷贝，比如一个空的<span class="title">block</span>。例如：</span></span><br></pre></td></tr></table></figure></p>
-<p>#include <stdio.h></stdio.h></p>
-<p>int main()<br>{<br>    ^{ printf(“Hello, World!\n”); } ();<br>    return 0;<br>}<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#9; &#10;- `_NSConcreteStackBlock`&#65306;&#20445;&#23384;&#22312;&#26632;&#20013;&#30340;block&#65292;&#24403;&#20989;&#25968;&#36820;&#22238;&#26102;&#34987;&#38144;&#27585;&#12290;&#20363;&#22914;&#65306;</span><br></pre></td></tr></table></figure></p>
-<p>#include <stdio.h></stdio.h></p>
-<p>int main()<br>{<br>    char a = ‘A’;<br>    ^{ printf(“%c\n”,a); } ();<br>    return 0;<br>}<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#10;- `_NSConcreteMallocBlock`&#65306;&#20445;&#23384;&#22312;&#22534;&#20013;&#30340;block&#65292;&#24403;&#24341;&#29992;&#35745;&#25968;&#20026;0&#26102;&#34987;&#38144;&#27585;&#12290;&#35813;&#31867;&#22411;&#30340;block&#37117;&#26159;&#30001;`_NSConcreteStackBlock`&#31867;&#22411;&#30340;block&#20174;&#26632;&#20013;&#22797;&#21046;&#21040;&#22534;&#20013;&#24418;&#25104;&#30340;&#12290;&#20363;&#22914;&#19979;&#38754;&#20195;&#30721;&#20013;&#65292;&#22312;`exampleB_addBlockToArray`&#26041;&#27861;&#20013;&#30340;block&#36824;&#26159;`_NSConcreteStackBlock`&#31867;&#22411;&#30340;&#65292;&#22312;`exampleB`&#26041;&#27861;&#20013;&#23601;&#34987;&#22797;&#21046;&#21040;&#20102;&#22534;&#20013;&#65292;&#25104;&#20026;`_NSConcreteMallocBlock`&#31867;&#22411;&#30340;block&#65306;</span><br></pre></td></tr></table></figure></p>
-<p>void exampleB_addBlockToArray(NSMutableArray *array) {<br>    char b = ‘B’;<br>      [array addObject:^{<br>            printf(“%c\n”, b);<br>      }];<br>}</p>
-<p>void exampleB() {<br>      NSMutableArray *array = [NSMutableArray array];<br>      exampleB_addBlockToArray(array);<br>      void (^block)() = [array objectAtIndex:0];<br>      block();<br>}<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#10;&#24635;&#32467;&#19968;&#19979;&#65306;&#10;&#10;- `_NSConcreteGlobalBlock`&#31867;&#22411;&#30340;block&#35201;&#20040;&#26159;&#31354;block&#65292;&#35201;&#20040;&#26159;&#19981;&#35775;&#38382;&#20219;&#20309;&#22806;&#37096;&#21464;&#37327;&#30340;block&#12290;&#23427;&#26082;&#19981;&#22312;&#26632;&#20013;&#65292;&#20063;&#19981;&#22312;&#22534;&#20013;&#65292;&#25105;&#29702;&#35299;&#20026;&#23427;&#21487;&#33021;&#22312;&#20869;&#23384;&#30340;&#20840;&#23616;&#21306;&#12290;&#10;- `_NSConcreteStackBlock`&#31867;&#22411;&#30340;block&#26377;&#38381;&#21253;&#34892;&#20026;&#65292;&#20063;&#23601;&#26159;&#26377;&#35775;&#38382;&#22806;&#37096;&#21464;&#37327;&#65292;&#24182;&#19988;&#35813;block&#21482;&#19988;&#21482;&#26377;&#26377;&#19968;&#27425;&#25191;&#34892;&#65292;&#22240;&#20026;&#26632;&#20013;&#30340;&#31354;&#38388;&#26159;&#21487;&#37325;&#22797;&#20351;&#29992;&#30340;&#65292;&#25152;&#20197;&#24403;&#26632;&#20013;&#30340;block&#25191;&#34892;&#19968;&#27425;&#20043;&#21518;&#23601;&#34987;&#28165;&#38500;&#20986;&#26632;&#20102;&#65292;&#25152;&#20197;&#26080;&#27861;&#22810;&#27425;&#20351;&#29992;&#12290;&#10;- `_NSConcreteMallocBlock`&#31867;&#22411;&#30340;block&#26377;&#38381;&#21253;&#34892;&#20026;&#65292;&#24182;&#19988;&#35813;block&#38656;&#35201;&#34987;&#22810;&#27425;&#25191;&#34892;&#12290;&#24403;&#38656;&#35201;&#22810;&#27425;&#25191;&#34892;&#26102;&#65292;&#23601;&#20250;&#25226;&#35813;block&#20174;&#26632;&#20013;&#22797;&#21046;&#21040;&#22534;&#20013;&#65292;&#20379;&#20197;&#22810;&#27425;&#25191;&#34892;&#12290;&#10;&#10;##3.3 &#32534;&#35793;&#22120;&#22914;&#20309;&#32534;&#35793;&#10;&#25105;&#20204;&#36890;&#36807;&#19968;&#20010;&#31616;&#21333;&#30340;&#31034;&#20363;&#26469;&#35828;&#26126;&#65306;  &#10;&#10;``` swift&#10;&#9;#import &#60;dispatch/dispatch.h&#62;&#10;&#10;&#9;typedef void(^BlockA)(void);&#10;&#10;&#9;__attribute__((noinline))&#10;&#9;void runBlockA(BlockA block) &#123;&#10;    &#9;block();&#10;&#9;&#125;&#10;&#10;&#9;void doBlockA() &#123;&#10;    &#9;BlockA block = ^&#123;&#10;        &#9;// Empty block&#10;    &#9;&#125;;&#10;    &#9;runBlockA(block);&#10;&#9;&#125;</span><br></pre></td></tr></table></figure></p>
-<p>上面的代码定义了一个名为<code>BlockA</code>的block类型，该block在函数<code>doBlockA</code>中实现，并将其作为函数<code>runBlockA</code>的参数，最后在函数<code>doBlockA</code>中调用函数<code>runBloackA</code>。</p>
+<p>##3.1 block的数据结构定义<br>我们通过大师文章中的一张图来说明：<br><img src="http://www.devtalking.com/postImages/block-struct.jpg" alt="block struct"><br>上图这个结构是在栈中的结构，我们来看看对应的结构体定义：  </p>
+<pre><code>struct Block_descriptor {
+    unsigned long int reserved;
+    unsigned long int size;
+    void (*copy)(void *dst, void *src);
+    void (*dispose)(void *);
+};
+
+struct Block_layout {
+    void *isa;
+    int flags;
+    int reserved;
+    void (*invoke)(void *, ...);
+    struct Block_descriptor *descriptor;
+    /* Imported variables. */
+};
+</code></pre><p>从上面代码看出，<code>Block_layout</code>就是对block结构体的定义：</p>
+<ul>
+<li><code>isa</code>指针：指向表明该block类型的类。</li>
+<li><code>flags</code>：按bit位表示一些block的附加信息，比如判断block类型、判断block引用计数、判断block是否需要执行辅助函数等。</li>
+<li><code>reserved</code>：保留变量，我的理解是表示block内部的变量数。</li>
+<li><code>invoke</code>：函数指针，指向具体的block实现的函数调用地址。</li>
+<li><code>descriptor</code>：block的附加描述信息，比如保留变量数、block的大小、进行<code>copy</code>或<code>dispose</code>的辅助函数指针。</li>
+<li><code>variables</code>：因为block有闭包性，所以可以访问block外部的局部变量。这些<code>variables</code>就是复制到结构体中的外部局部变量或变量的地址。</li>
+</ul>
+<h2 id="block_u7684_u7C7B_u578B"><a href="#block_u7684_u7C7B_u578B" class="headerlink" title="block的类型"></a>block的类型</h2><p>block有几种不同的类型，每种类型都有对应的类，上述中<code>isa</code>指针就是指向这个类。这里列出常见的三种类型：</p>
+<ul>
+<li><code>_NSConcreteGlobalBlock</code>：全局的静态block，不会访问任何外部变量，不会涉及到任何拷贝，比如一个空的block。例如： </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &#60;stdio.h&#62;&#10;&#10;int main()&#10;&#123;&#10;&#9;^&#123; printf(&#34;Hello, World!\n&#34;); &#125; ();&#10;    return 0;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>_NSConcreteStackBlock</code>：保存在栈中的block，当函数返回时被销毁。例如：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &#60;stdio.h&#62;&#10;&#10;int main()&#10;&#123;&#10;&#9;char a = &#39;A&#39;;&#10;    ^&#123; printf(&#34;%c\n&#34;,a); &#125; ();&#10;    return 0;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>_NSConcreteMallocBlock</code>：保存在堆中的block，当引用计数为0时被销毁。该类型的block都是由<code>_NSConcreteStackBlock</code>类型的block从栈中复制到堆中形成的。例如下面代码中，在<code>exampleB_addBlockToArray</code>方法中的block还是<code>_NSConcreteStackBlock</code>类型的，在<code>exampleB</code>方法中就被复制到了堆中，成为<code>_NSConcreteMallocBlock</code>类型的block：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">void exampleB_addBlockToArray(NSMutableArray *array) &#123;&#10;&#9;char b = &#39;B&#39;;&#10;  &#9;[array addObject:^&#123;&#10;    &#9;&#9;printf(&#34;%c\n&#34;, b);&#10;  &#9;&#125;];&#10;&#125;&#10; &#10;void exampleB() &#123;&#10;  &#9;NSMutableArray *array = [NSMutableArray array];&#10;  &#9;exampleB_addBlockToArray(array);&#10;  &#9;void (^block)() = [array objectAtIndex:0];&#10;  &#9;block();&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>总结一下：</p>
+<ul>
+<li><code>_NSConcreteGlobalBlock</code>类型的block要么是空block，要么是不访问任何外部变量的block。它既不在栈中，也不在堆中，我理解为它可能在内存的全局区。</li>
+<li><code>_NSConcreteStackBlock</code>类型的block有闭包行为，也就是有访问外部变量，并且该block只且只有有一次执行，因为栈中的空间是可重复使用的，所以当栈中的block执行一次之后就被清除出栈了，所以无法多次使用。</li>
+<li><code>_NSConcreteMallocBlock</code>类型的block有闭包行为，并且该block需要被多次执行。当需要多次执行时，就会把该block从栈中复制到堆中，供以多次执行。</li>
+</ul>
+<h2 id="u7F16_u8BD1_u5668_u5982_u4F55_u7F16_u8BD1"><a href="#u7F16_u8BD1_u5668_u5982_u4F55_u7F16_u8BD1" class="headerlink" title="编译器如何编译"></a>编译器如何编译</h2><p>我们通过一个简单的示例来说明：  </p>
+<pre><code>#import &lt;dispatch/dispatch.h&gt;
+
+typedef void(^BlockA)(void);
+
+__attribute__((noinline))
+void runBlockA(BlockA block) {
+    block();
+}
+
+void doBlockA() {
+    BlockA block = ^{
+        // Empty block
+    };
+    runBlockA(block);
+}
+</code></pre><p>上面的代码定义了一个名为<code>BlockA</code>的block类型，该block在函数<code>doBlockA</code>中实现，并将其作为函数<code>runBlockA</code>的参数，最后在函数<code>doBlockA</code>中调用函数<code>runBloackA</code>。</p>
 <blockquote>
 <p>注意：如果block的创建和调用都在一个函数里面，那么优化器(optimiser)可能会对代码做优化处理，从而导致我们看不到编译器中的一些操作，所以用<code>__attribute__((noinline))</code>给函数<code>runBlockA</code>添加<code>noinline</code>，这样优化器就不会在<code>doBlockA</code>函数中对<code>runBlockA</code>的调用做内联优化处理。</p>
 </blockquote>
 <p>我们来看看编译器做的工作内容：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">#<span class="keyword">import</span> &lt;dispatch/dispatch.h&gt;</span><br><span class="line"></span><br><span class="line">__attribute__((noinline))</span><br><span class="line">void runBlockA(<span class="class"><span class="keyword">struct</span> <span class="title">Block_layout</span> *<span class="title">block</span>) </span>&#123;</span><br><span class="line">   	block-&gt;invoke();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void block_invoke(<span class="class"><span class="keyword">struct</span> <span class="title">Block_layout</span> *<span class="title">block</span>) </span>&#123;</span><br><span class="line">   	<span class="comment">// Empty block function</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void doBlockA() &#123;</span><br><span class="line">   	<span class="class"><span class="keyword">struct</span> <span class="title">Block_descriptor</span> <span class="title">descriptor</span>;</span><br><span class="line">   	<span class="title">descriptor</span>-&gt;<span class="title">reserved</span> = 0;</span><br><span class="line">   	<span class="title">descriptor</span>-&gt;<span class="title">size</span> = 20;</span><br><span class="line">   	<span class="title">descriptor</span>-&gt;<span class="title">copy</span> = <span class="title">NULL</span>;</span><br><span class="line">   	<span class="title">descriptor</span>-&gt;<span class="title">dispose</span> = <span class="title">NULL</span>;</span><br><span class="line"></span><br><span class="line">   	<span class="title">struct</span> <span class="title">Block_layout</span> <span class="title">block</span>;</span><br><span class="line">   	<span class="title">block</span>-&gt;<span class="title">isa</span> = <span class="title">_NSConcreteGlobalBlock</span>;</span><br><span class="line">   	<span class="title">block</span>-&gt;<span class="title">flags</span> = 1342177280;</span><br><span class="line">   	<span class="title">block</span>-&gt;<span class="title">reserved</span> = 0;</span><br><span class="line">   	<span class="title">block</span>-&gt;<span class="title">invoke</span> = <span class="title">block_invoke</span>;</span><br><span class="line">   	<span class="title">block</span>-&gt;<span class="title">descriptor</span> = <span class="title">descriptor</span>;</span><br><span class="line"></span><br><span class="line">   	<span class="title">runBlockA</span>(&amp;<span class="title">block</span>);</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>上面的代码结合block的数据结构定义，我们能很容易得理解编译器内部对block的工作内容。</p>
-<p>##3.4 copy()和dispose()<br>上文中提到，如果我们想要在以后继续使用某个block，就必须要对该block进行拷贝操作，即从栈空间复制到堆空间。所以拷贝操作就需要调用<code>Block_copy()</code>函数，block的<code>descriptor</code>中有一个<code>copy()</code>辅助函数，该函数在<code>Block_copy()</code>中执行，用于当block需要拷贝对象的时候，拷贝辅助函数会retain住已经拷贝的对象。</p>
+<pre><code>#import &lt;dispatch/dispatch.h&gt;
+
+__attribute__((noinline))
+void runBlockA(struct Block_layout *block) {
+    block-&gt;invoke();
+}
+
+void block_invoke(struct Block_layout *block) {
+    // Empty block function
+}
+
+void doBlockA() {
+    struct Block_descriptor descriptor;
+    descriptor-&gt;reserved = 0;
+    descriptor-&gt;size = 20;
+    descriptor-&gt;copy = NULL;
+    descriptor-&gt;dispose = NULL;
+
+    struct Block_layout block;
+    block-&gt;isa = _NSConcreteGlobalBlock;
+    block-&gt;flags = 1342177280;
+    block-&gt;reserved = 0;
+    block-&gt;invoke = block_invoke;
+    block-&gt;descriptor = descriptor;
+
+    runBlockA(&amp;block);
+}
+</code></pre><p>上面的代码结合block的数据结构定义，我们能很容易得理解编译器内部对block的工作内容。</p>
+<h2 id="copy_28_29_u548Cdispose_28_29"><a href="#copy_28_29_u548Cdispose_28_29" class="headerlink" title="copy()和dispose()"></a>copy()和dispose()</h2><p>上文中提到，如果我们想要在以后继续使用某个block，就必须要对该block进行拷贝操作，即从栈空间复制到堆空间。所以拷贝操作就需要调用<code>Block_copy()</code>函数，block的<code>descriptor</code>中有一个<code>copy()</code>辅助函数，该函数在<code>Block_copy()</code>中执行，用于当block需要拷贝对象的时候，拷贝辅助函数会retain住已经拷贝的对象。</p>
 <p>既然有有copy那么就应该有release，与<code>Block_copy()</code>对应的函数是<code>Block_release()</code>，它的作用不言而喻，就是释放我们不需要再使用的block，block的<code>descriptor</code>中有一个<code>dispose()</code>辅助函数，该函数在<code>Block_release()</code>中执行，负责做和<code>copy()</code>辅助函数相反的操作，例如释放掉所有在block中拷贝的变量等。</p>
-<p>#4.总结<br>以上内容是我学习各大师的文章后对自己学习情况的一个记录，其中有部分文字和代码示例是来自大师的文章，还有一些自己的理解，如有错误还请大家勘误。</p>
+<h1 id="u603B_u7ED3"><a href="#u603B_u7ED3" class="headerlink" title="总结"></a>总结</h1><p>以上内容是我学习各大师的文章后对自己学习情况的一个记录，其中有部分文字和代码示例是来自大师的文章，还有一些自己的理解，如有错误还请大家勘误。</p>
 <p>参考链接：  </p>
 <ul>
 <li><a href="http://www.galloway.me.uk/2012/10/a-look-inside-blocks-episode-1/" target="_blank" rel="external">A look inside blocks: Episode 1</a>  </li>
