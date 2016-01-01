@@ -531,6 +531,89 @@
             
             
               
+                <a class="post-title-link" href="/articles/gojs-simple-diagram/" itemprop="url">
+                  JavaScript图表图形框架 -- GOJS简介
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2014-07-18T00:00:00+08:00" content="2014-07-18">
+              2014-07-18
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>gojs是一个能够让我们很容易的实现基于html5浏览器绘制具有交互性的图形图表的JavaScript框架。<br>gojs采用了面向对象的编程模式。以图形对象表示绘图模板。以用普通js对象存储数据作为数据模型，然后赋值给图形对象的属性作为数据绑定的模式。gojs同样提供了大量工具类来代表我们的交互行为。我们需要做的就是创建图形对象、构建数据模型、设置属性、绑定数据模型、使用工具类添加行为即可创建出具有丰富交互性能的各种图表。 </p>
+<h2 id="u4E00_u4E2A_u7B80_u5355_u7684gojs_u56FE_u8868"><a href="#u4E00_u4E2A_u7B80_u5355_u7684gojs_u56FE_u8868" class="headerlink" title="一个简单的gojs图表"></a>一个简单的gojs图表</h2><p>下面的代码定义了一个<code>node</code>模板和数据模型，并它们构建了一个简单的图表：  </p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">	// For conciseness. See the "Building Parts" intro page for more</span><br><span class="line">    var $ = go.GraphObject.make;</span><br><span class="line"></span><br><span class="line">    // the node template describes how each Node should be constructed</span><br><span class="line">    diagram.nodeTemplate =</span><br><span class="line">      $(go.Node, "Auto",  // the Shape automatically fits around the TextBlock</span><br><span class="line">        $(go.Shape, "RoundedRectangle",</span><br><span class="line">          // bind Shape.fill to Node.data.color</span><br><span class="line">          new go.Binding("fill", "color")),</span><br><span class="line">        $(go.TextBlock,</span><br><span class="line">          &#123; margin: 3 &#125;,  // some room around the text</span><br><span class="line">          // bind TextBlock.text to Node.data.key</span><br><span class="line">          new go.Binding("text", "key"))</span><br><span class="line">      );</span><br><span class="line"></span><br><span class="line">    // the Model holds only the essential information describing the diagram</span><br><span class="line">    diagram.model = new go.GraphLinksModel(</span><br><span class="line">    [ // a JavaScript Array of JavaScript objects, one per node</span><br><span class="line">      &#123; key: "Alpha", color: "lightblue" &#125;,</span><br><span class="line">      &#123; key: "Beta", color: "orange" &#125;,</span><br><span class="line">      &#123; key: "Gamma", color: "lightgreen" &#125;,</span><br><span class="line">      &#123; key: "Delta", color: "pink" &#125;</span><br><span class="line">    ],</span><br><span class="line">    [ // a JavaScript Array of JavaScript objects, one per link</span><br><span class="line">      &#123; from: "Alpha", to: "Beta" &#125;,</span><br><span class="line">      &#123; from: "Alpha", to: "Gamma" &#125;,</span><br><span class="line">      &#123; from: "Beta", to: "Beta" &#125;,</span><br><span class="line">      &#123; from: "Gamma", to: "Delta" &#125;,</span><br><span class="line">      &#123; from: "Delta", to: "Alpha" &#125;</span><br><span class="line">    ]);</span><br><span class="line"></span><br><span class="line">    diagram.initialContentAlignment = go.Spot.Center;</span><br><span class="line">    // enable Ctrl-Z to undo and Ctrl-Y to redo</span><br><span class="line">    diagram.undoManager.isEnabled = true;</span><br><span class="line">```  </span><br><span class="line">结果：  </span><br><span class="line">![Diagram](http://www.devtalking.com/postImages/simpleDiagram.jpg)   </span><br><span class="line"></span><br><span class="line">虽然上面展示的是图片，但是实际上我们可以在这个图表上用鼠标中键滚动、选中、删除、重做、撤销等等交互。</span><br><span class="line"></span><br><span class="line">## gojs的基本概念</span><br><span class="line">上面的示例是让我们先在感官上认知一下gojs的产出物，下面我们来阐述一下gojs的基本概念。  </span><br><span class="line">  </span><br><span class="line">gojs绘制的图表（`Diagram`）具有两个最基本的元素，就是点和线（`Node`和`Link`），并且他们可以自由组合组成一个组（`Group`）。所有的元素都处在图层（`Layer`）上，并且可以对它们进行布局（`Layout`）。  </span><br><span class="line"></span><br><span class="line">每个`Diagram`都是通过数据模型（`Model`）来填充和确定`Node`的信息和`Link`的所属关系的。并且我们只需要创建好`Node`和`Link`的模板以及数据模型，其他的是事情都交给gojs去处理。它会通过`Model.nodeDataArray`方法和`GraphLinksModel.linkDataArray`方法自动加载模型并构建元素。  </span><br><span class="line"></span><br><span class="line">每一个`Node`和`Link`都是通过模板来描述他们的文本、形状、颜色等信息以及交互行为。每个模板其实就是一个面板（`Panel`）（你可以将各种元素自由组合在它里面，也可以在它里面添加各种交互行为），比如说将`TextBlock`、`Shape`、`Picture`等元素添加到这个`Panel`中，鼠标进入离开的交互行为也可以添加到`Panel`中，那么这个`Panel`就是一个模板。</span><br><span class="line"></span><br><span class="line">每个`Node`的位置可以使用`Diagram.layout`或`Group.layout`进行初始化设置，也可以基于交互行为进行拖拽。  </span><br><span class="line"></span><br><span class="line">gojs里的工具类可以为`Diagram`添加鼠标、键盘事件。一般情况下`Diagram`都默认设置了几种交互行为，比如说拖拽、连线。我们也可以通过`ToolManager`对象来管理工具类，或者说来管理交互行为，比如说可以停止某些交互，或开启某些交互等。  </span><br><span class="line"></span><br><span class="line">每个`Diagram`同时也包含`CommandHandler`对象，它的作用是添加一些键盘命令，比如点`Delete`键删除元素，`Ctrl+C`复制、`Ctrl+V`粘贴、`Ctrl+Z`撤销等。但是`CommandHandler`也是被`ToolManager`管理的。  </span><br><span class="line"></span><br><span class="line">`Diagram`也提供通过鼠标中键滚动视图、放大缩小视图。</span><br><span class="line"></span><br><span class="line">gojs还提供了图表的预览视图（`Overview`），用于了解大规模图表的概况，同时还提供了组件管理面板（`Palette`），用于管理创建的组件，并且支持将组件拖拽到`Diagram`中。</span><br><span class="line"></span><br><span class="line">在`Diagram`中，你可以选中`Node`或者`Link`，你会发现他们有少许的变化，比如在`Node`周围会增加选中框，选中`Link`会变色等。这些都是由`Adornment`对象控制的，你还可以用它来增加提示框、右键菜单等。</span><br><span class="line"></span><br><span class="line">## Diagram默认的交互行为</span><br><span class="line"></span><br><span class="line">- 选中`Node`或者`Link`，会出现蓝色选中框，`Link`也会变为蓝色。</span><br><span class="line">- 使用`Ctrl+鼠标左键`可以选中多个元素。</span><br><span class="line">- 在`Panel`中点击鼠标左键移动鼠标可以移动所有元素。</span><br><span class="line">- 使用`Ctrl+A`可以选中所有元素。</span><br><span class="line">- 选中元素，用鼠标可以拖动元素。</span><br><span class="line">- 使用`Ctrl+C`/`Ctrl+V`可以复制粘贴元素。</span><br><span class="line">- 使用`Delete`键可以删除元素。</span><br><span class="line">- 选中多个元素，然后使用`Ctrl+G`可以将这些选中的元素组合成一个组。</span><br><span class="line">- 使用`Ctrl+Shift+G`可以拆散组。</span><br><span class="line">- 当元素超出`Diagram`时，可自动出现滚动条。</span><br><span class="line">- 用鼠标拖拽`Node`边缘可以与其他`Node`进行连线。</span><br><span class="line">- 选中`Link`，可以重新选择目标`Node`，即可以重新连线。</span><br><span class="line"></span><br><span class="line">## 创建一个Diagram</span><br><span class="line">每个`Diagram`都需要依托与一个HTML的`DIV`元素，虽然由gojs接管了这个`DIV`，但是`DIV`本身的属性依然可以由我们通过CSS设置，比如位置、高宽等。gojs实际上是在`DIV`中创建了一个`Canvas`元素，`Canvas`的高宽自动适配`DIV`的高宽。</span><br><span class="line"></span><br><span class="line">``` html</span><br><span class="line"></span><br><span class="line">    &lt;!-- The DIV for a Diagram needs an explicit size or else we won't see anything.</span><br><span class="line">     In this case we also add a border to help see the edges. --&gt;</span><br><span class="line">    &lt;div id="myDiagramDiv" style="border: solid 1px blue; width:400px; height:150px"&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>当然，当你准备开始创建<code>Diagram</code>前，首先要导入gojs的文件。gojs的文件分为Develop（<code>gojs-debug.js</code>）和Product（<code>gojs.js</code>）两种，前者是供开发人员使用的，因为它包含了一些用于调试的代码，后者用于正式发布，速度较快。gojs不依赖与任何JavaScript框架，所以它可以与任何JavaScript框架一起使用，而不会产生冲突。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Include the GoJS library. --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"gojs.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>下面就可以使用gojs将上述的<code>DIV</code>构建为一个<code>Diagram</code>了，这里需要注意的是，使用gojs的api时，都要使用前缀<code>go.</code>。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Create the Diagram in the DIV element using JavaScript. --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- The "go" object is the "namespace" that holds all of the GoJS types. --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="actionscript"></span><br><span class="line"><span class="keyword">var</span> diagram = <span class="keyword">new</span> go.Diagram(<span class="string">"myDiagramDiv"</span>);</span><br><span class="line">diagram.model = <span class="keyword">new</span> go.GraphLinksModel(</span><br><span class="line">    [&#123; key: <span class="string">"Hello"</span> &#125;,   <span class="comment">// two node data, in an Array</span></span><br><span class="line">    &#123; key: <span class="string">"World!"</span> &#125;],</span><br><span class="line">    [&#123; from: <span class="string">"Hello"</span>, to: <span class="string">"World!"</span>&#125;]  <span class="comment">// one link, in an Array</span></span><br><span class="line">);</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这样就构建了一个简单的<code>Diagram</code>。<br><img src="http://www.devtalking.com/postImages/anotherSimpleDiagram.jpg" alt="Diagram"></p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 <a class="post-title-link" href="/articles/2014-06-25-you-should-know-block/" itemprop="url">
                   Objective-C中的Block
                 </a>
@@ -926,7 +1009,7 @@ void doBlockA() {
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">4</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -940,7 +1023,7 @@ void doBlockA() {
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">6</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
