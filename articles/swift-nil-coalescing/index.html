@@ -34,7 +34,7 @@
 
 
 
-  <meta name="keywords" content="GOJS,JavaScript," />
+  <meta name="keywords" content="Swift," />
 
 
 
@@ -43,18 +43,37 @@
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
 
 
-<meta name="description" content="gojs是一个能够让我们很容易的实现基于html5浏览器绘制具有交互性的图形图表的JavaScript框架。gojs采用了面向对象的编程模式。以图形对象表示绘图模板。以用普通js对象存储数据作为数据模型，然后赋值给图形对象的属性作为数据绑定的模式。gojs同样提供了大量工具类来代表我们的交互行为。我们需要做的就是创建图形对象、构建数据模型、设置属性、绑定数据模型、使用工具类添加行为即可创建出具有丰">
+<meta name="description" content="在Swift官方《The Swift Programming Language》文档的Basic Operators一节中添加了Nil Coalescing Operator小结，介绍了一个新的运算符Nil Coalescing，符号是??，它的表现形成如下：
+let c = a ?? b
+这个运算符有两个条件：
+
+a必须是Optional类型的。
+b的类型必须要和a解包后的值类型一致。
+
+符合这">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JavaScript图表图形框架 -- GOJS简介">
-<meta property="og:url" content="http://qmzuzu.github.io/articles/gojs-simple-diagram/index.html">
+<meta property="og:title" content="Swift中Nil Coalescing运算符的使用技巧">
+<meta property="og:url" content="http://qmzuzu.github.io/articles/swift-nil-coalescing/index.html">
 <meta property="og:site_name" content="程序员说">
-<meta property="og:description" content="gojs是一个能够让我们很容易的实现基于html5浏览器绘制具有交互性的图形图表的JavaScript框架。gojs采用了面向对象的编程模式。以图形对象表示绘图模板。以用普通js对象存储数据作为数据模型，然后赋值给图形对象的属性作为数据绑定的模式。gojs同样提供了大量工具类来代表我们的交互行为。我们需要做的就是创建图形对象、构建数据模型、设置属性、绑定数据模型、使用工具类添加行为即可创建出具有丰">
-<meta property="og:image" content="http://www.devtalking.com/postImages/simpleDiagram.jpg">
-<meta property="og:image" content="http://www.devtalking.com/postImages/anotherSimpleDiagram.jpg">
-<meta property="og:updated_time" content="2016-01-01T06:44:03.000Z">
+<meta property="og:description" content="在Swift官方《The Swift Programming Language》文档的Basic Operators一节中添加了Nil Coalescing Operator小结，介绍了一个新的运算符Nil Coalescing，符号是??，它的表现形成如下：
+let c = a ?? b
+这个运算符有两个条件：
+
+a必须是Optional类型的。
+b的类型必须要和a解包后的值类型一致。
+
+符合这">
+<meta property="og:updated_time" content="2016-01-01T13:19:14.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JavaScript图表图形框架 -- GOJS简介">
-<meta name="twitter:description" content="gojs是一个能够让我们很容易的实现基于html5浏览器绘制具有交互性的图形图表的JavaScript框架。gojs采用了面向对象的编程模式。以图形对象表示绘图模板。以用普通js对象存储数据作为数据模型，然后赋值给图形对象的属性作为数据绑定的模式。gojs同样提供了大量工具类来代表我们的交互行为。我们需要做的就是创建图形对象、构建数据模型、设置属性、绑定数据模型、使用工具类添加行为即可创建出具有丰">
+<meta name="twitter:title" content="Swift中Nil Coalescing运算符的使用技巧">
+<meta name="twitter:description" content="在Swift官方《The Swift Programming Language》文档的Basic Operators一节中添加了Nil Coalescing Operator小结，介绍了一个新的运算符Nil Coalescing，符号是??，它的表现形成如下：
+let c = a ?? b
+这个运算符有两个条件：
+
+a必须是Optional类型的。
+b的类型必须要和a解包后的值类型一致。
+
+符合这">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -66,7 +85,7 @@
 
 
 
-  <title> JavaScript图表图形框架 -- GOJS简介 | 程序员说 </title>
+  <title> Swift中Nil Coalescing运算符的使用技巧 | 程序员说 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="">
@@ -181,7 +200,7 @@
             
             
               
-                JavaScript图表图形框架 -- GOJS简介
+                Swift中Nil Coalescing运算符的使用技巧
               
             
           </h1>
@@ -190,8 +209,8 @@
         <div class="post-meta">
           <span class="post-time">
             發表於
-            <time itemprop="dateCreated" datetime="2014-07-18T00:00:00+08:00" content="2014-07-18">
-              2014-07-18
+            <time itemprop="dateCreated" datetime="2014-08-13T00:00:00+08:00" content="2014-08-13">
+              2014-08-13
             </time>
           </span>
 
@@ -214,88 +233,67 @@
       
 
       
-        <span itemprop="articleBody"><p>gojs是一个能够让我们很容易的实现基于html5浏览器绘制具有交互性的图形图表的JavaScript框架。<br>gojs采用了面向对象的编程模式。以图形对象表示绘图模板。以用普通js对象存储数据作为数据模型，然后赋值给图形对象的属性作为数据绑定的模式。gojs同样提供了大量工具类来代表我们的交互行为。我们需要做的就是创建图形对象、构建数据模型、设置属性、绑定数据模型、使用工具类添加行为即可创建出具有丰富交互性能的各种图表。 </p>
-<h2 id="u4E00_u4E2A_u7B80_u5355_u7684gojs_u56FE_u8868"><a href="#u4E00_u4E2A_u7B80_u5355_u7684gojs_u56FE_u8868" class="headerlink" title="一个简单的gojs图表"></a>一个简单的gojs图表</h2><p>下面的代码定义了一个<code>node</code>模板和数据模型，并它们构建了一个简单的图表：  </p>
-<pre><code>// For conciseness. See the &quot;Building Parts&quot; intro page for more
-var $ = go.GraphObject.make;
-
-// the node template describes how each Node should be constructed
-diagram.nodeTemplate =
-  $(go.Node, &quot;Auto&quot;,  // the Shape automatically fits around the TextBlock
-    $(go.Shape, &quot;RoundedRectangle&quot;,
-      // bind Shape.fill to Node.data.color
-      new go.Binding(&quot;fill&quot;, &quot;color&quot;)),
-    $(go.TextBlock,
-      { margin: 3 },  // some room around the text
-      // bind TextBlock.text to Node.data.key
-      new go.Binding(&quot;text&quot;, &quot;key&quot;))
-  );
-
-// the Model holds only the essential information describing the diagram
-diagram.model = new go.GraphLinksModel(
-[ // a JavaScript Array of JavaScript objects, one per node
-  { key: &quot;Alpha&quot;, color: &quot;lightblue&quot; },
-  { key: &quot;Beta&quot;, color: &quot;orange&quot; },
-  { key: &quot;Gamma&quot;, color: &quot;lightgreen&quot; },
-  { key: &quot;Delta&quot;, color: &quot;pink&quot; }
-],
-[ // a JavaScript Array of JavaScript objects, one per link
-  { from: &quot;Alpha&quot;, to: &quot;Beta&quot; },
-  { from: &quot;Alpha&quot;, to: &quot;Gamma&quot; },
-  { from: &quot;Beta&quot;, to: &quot;Beta&quot; },
-  { from: &quot;Gamma&quot;, to: &quot;Delta&quot; },
-  { from: &quot;Delta&quot;, to: &quot;Alpha&quot; }
-]);
-
-diagram.initialContentAlignment = go.Spot.Center;
-// enable Ctrl-Z to undo and Ctrl-Y to redo
-diagram.undoManager.isEnabled = true;
-</code></pre><p>结果：<br><img src="http://www.devtalking.com/postImages/simpleDiagram.jpg" alt="Diagram">   </p>
-<p>虽然上面展示的是图片，但是实际上我们可以在这个图表上用鼠标中键滚动、选中、删除、重做、撤销等等交互。</p>
-<h2 id="gojs_u7684_u57FA_u672C_u6982_u5FF5"><a href="#gojs_u7684_u57FA_u672C_u6982_u5FF5" class="headerlink" title="gojs的基本概念"></a>gojs的基本概念</h2><p>上面的示例是让我们先在感官上认知一下gojs的产出物，下面我们来阐述一下gojs的基本概念。  </p>
-<p>gojs绘制的图表（<code>Diagram</code>）具有两个最基本的元素，就是点和线（<code>Node</code>和<code>Link</code>），并且他们可以自由组合组成一个组（<code>Group</code>）。所有的元素都处在图层（<code>Layer</code>）上，并且可以对它们进行布局（<code>Layout</code>）。  </p>
-<p>每个<code>Diagram</code>都是通过数据模型（<code>Model</code>）来填充和确定<code>Node</code>的信息和<code>Link</code>的所属关系的。并且我们只需要创建好<code>Node</code>和<code>Link</code>的模板以及数据模型，其他的是事情都交给gojs去处理。它会通过<code>Model.nodeDataArray</code>方法和<code>GraphLinksModel.linkDataArray</code>方法自动加载模型并构建元素。  </p>
-<p>每一个<code>Node</code>和<code>Link</code>都是通过模板来描述他们的文本、形状、颜色等信息以及交互行为。每个模板其实就是一个面板（<code>Panel</code>）（你可以将各种元素自由组合在它里面，也可以在它里面添加各种交互行为），比如说将<code>TextBlock</code>、<code>Shape</code>、<code>Picture</code>等元素添加到这个<code>Panel</code>中，鼠标进入离开的交互行为也可以添加到<code>Panel</code>中，那么这个<code>Panel</code>就是一个模板。</p>
-<p>每个<code>Node</code>的位置可以使用<code>Diagram.layout</code>或<code>Group.layout</code>进行初始化设置，也可以基于交互行为进行拖拽。  </p>
-<p>gojs里的工具类可以为<code>Diagram</code>添加鼠标、键盘事件。一般情况下<code>Diagram</code>都默认设置了几种交互行为，比如说拖拽、连线。我们也可以通过<code>ToolManager</code>对象来管理工具类，或者说来管理交互行为，比如说可以停止某些交互，或开启某些交互等。  </p>
-<p>每个<code>Diagram</code>同时也包含<code>CommandHandler</code>对象，它的作用是添加一些键盘命令，比如点<code>Delete</code>键删除元素，<code>Ctrl+C</code>复制、<code>Ctrl+V</code>粘贴、<code>Ctrl+Z</code>撤销等。但是<code>CommandHandler</code>也是被<code>ToolManager</code>管理的。  </p>
-<p><code>Diagram</code>也提供通过鼠标中键滚动视图、放大缩小视图。</p>
-<p>gojs还提供了图表的预览视图（<code>Overview</code>），用于了解大规模图表的概况，同时还提供了组件管理面板（<code>Palette</code>），用于管理创建的组件，并且支持将组件拖拽到<code>Diagram</code>中。</p>
-<p>在<code>Diagram</code>中，你可以选中<code>Node</code>或者<code>Link</code>，你会发现他们有少许的变化，比如在<code>Node</code>周围会增加选中框，选中<code>Link</code>会变色等。这些都是由<code>Adornment</code>对象控制的，你还可以用它来增加提示框、右键菜单等。</p>
-<h2 id="Diagram_u9ED8_u8BA4_u7684_u4EA4_u4E92_u884C_u4E3A"><a href="#Diagram_u9ED8_u8BA4_u7684_u4EA4_u4E92_u884C_u4E3A" class="headerlink" title="Diagram默认的交互行为"></a>Diagram默认的交互行为</h2><ul>
-<li>选中<code>Node</code>或者<code>Link</code>，会出现蓝色选中框，<code>Link</code>也会变为蓝色。</li>
-<li>使用<code>Ctrl+鼠标左键</code>可以选中多个元素。</li>
-<li>在<code>Panel</code>中点击鼠标左键移动鼠标可以移动所有元素。</li>
-<li>使用<code>Ctrl+A</code>可以选中所有元素。</li>
-<li>选中元素，用鼠标可以拖动元素。</li>
-<li>使用<code>Ctrl+C</code>/<code>Ctrl+V</code>可以复制粘贴元素。</li>
-<li>使用<code>Delete</code>键可以删除元素。</li>
-<li>选中多个元素，然后使用<code>Ctrl+G</code>可以将这些选中的元素组合成一个组。</li>
-<li>使用<code>Ctrl+Shift+G</code>可以拆散组。</li>
-<li>当元素超出<code>Diagram</code>时，可自动出现滚动条。</li>
-<li>用鼠标拖拽<code>Node</code>边缘可以与其他<code>Node</code>进行连线。</li>
-<li>选中<code>Link</code>，可以重新选择目标<code>Node</code>，即可以重新连线。</li>
+        <span itemprop="articleBody"><p>在Swift官方《The Swift Programming Language》文档的<code>Basic Operators</code>一节中添加了<code>Nil Coalescing Operator</code>小结，介绍了一个新的运算符<strong>Nil Coalescing</strong>，符号是<code>??</code>，它的表现形成如下：</p>
+<pre><code>let c = a ?? b
+</code></pre><p>这个运算符有两个条件：</p>
+<ul>
+<li><code>a</code>必须是<code>Optional</code>类型的。</li>
+<li><code>b</code>的类型必须要和<code>a</code>解包后的值类型一致。</li>
 </ul>
-<h2 id="u521B_u5EFA_u4E00_u4E2ADiagram"><a href="#u521B_u5EFA_u4E00_u4E2ADiagram" class="headerlink" title="创建一个Diagram"></a>创建一个Diagram</h2><p>每个<code>Diagram</code>都需要依托与一个HTML的<code>DIV</code>元素，虽然由gojs接管了这个<code>DIV</code>，但是<code>DIV</code>本身的属性依然可以由我们通过CSS设置，比如位置、高宽等。gojs实际上是在<code>DIV</code>中创建了一个<code>Canvas</code>元素，<code>Canvas</code>的高宽自动适配<code>DIV</code>的高宽。</p>
-<pre><code>&lt;!-- The DIV for a Diagram needs an explicit size or else we won&apos;t see anything.
- In this case we also add a border to help see the edges. --&gt;
-&lt;div id=&quot;myDiagramDiv&quot; style=&quot;border: solid 1px blue; width:400px; height:150px&quot;&gt;&lt;/div&gt;
-</code></pre><p>当然，当你准备开始创建<code>Diagram</code>前，首先要导入gojs的文件。gojs的文件分为Develop（<code>gojs-debug.js</code>）和Product（<code>gojs.js</code>）两种，前者是供开发人员使用的，因为它包含了一些用于调试的代码，后者用于正式发布，速度较快。gojs不依赖与任何JavaScript框架，所以它可以与任何JavaScript框架一起使用，而不会产生冲突。</p>
-<pre><code>&lt;!-- Include the GoJS library. --&gt;
-&lt;script src=&quot;gojs.js&quot;&gt;&lt;/script&gt;
-</code></pre><p>下面就可以使用gojs将上述的<code>DIV</code>构建为一个<code>Diagram</code>了，这里需要注意的是，使用gojs的api时，都要使用前缀<code>go.</code>。</p>
-<pre><code>&lt;!-- Create the Diagram in the DIV element using JavaScript. --&gt;
-&lt;!-- The &quot;go&quot; object is the &quot;namespace&quot; that holds all of the GoJS types. --&gt;
-&lt;script&gt;
-var diagram = new go.Diagram(&quot;myDiagramDiv&quot;);
-diagram.model = new go.GraphLinksModel(
-    [{ key: &quot;Hello&quot; },   // two node data, in an Array
-    { key: &quot;World!&quot; }],
-    [{ from: &quot;Hello&quot;, to: &quot;World!&quot;}]  // one link, in an Array
-);
-&lt;/script&gt;
-</code></pre><p>这样就构建了一个简单的<code>Diagram</code>。<br><img src="http://www.devtalking.com/postImages/anotherSimpleDiagram.jpg" alt="Diagram"></p>
-</span>
+<p>符合这两个条件后，我们来解释一下上述这行代码，意思就是<code>c</code>的值是<code>a</code>或<code>b</code>中一个的值，但有前提条件，就是当<code>a</code>解包后值不为<code>nil</code>时，那么就将<code>a</code>解包后的值赋值给<code>c</code>，如果<code>a</code>解包后值为<code>nil</code>，那么就将<code>b</code>的值赋值给<code>c</code>。</p>
+<p>我们还可以用三目运算来更形象的解释这个运算符：</p>
+<pre><code>let c = a != nil ? a! : b
+</code></pre><p>从上面的代码我们很容易理解，当<code>a</code>的值不等于<code>nil</code>时，将<code>a</code>解包后的值赋值给<code>c</code>，否则将<code>b</code>的值赋值给<code>c</code>。</p>
+<p>我们来看看官方给的代码示例：</p>
+<pre><code>let defaultColorName = &quot;red&quot;
+var userDefinedColorName: String?   // 默认值为nil
+
+var colorNameToUse = userDefinedColorName ?? defaultColorName
+// 因为userDefinedColorName的值是nil，所以colorNameToUse的值为&quot;red&quot;
+
+
+userDefinedColorName = &quot;green&quot;
+colorNameToUse = userDefinedColorName ?? defaultColorName
+// 因为userDefinedColorName的值不为nil，所以colorNameToUse的值为&quot;green&quot;
+</code></pre><p>大家看到这应该对<strong>Nil Coalescing</strong>这个运算符有比较清晰的理解了，但在实际运用中，我们还需要注意以下几点。</p>
+<h2 id="u7F16_u8BD1_u5668_u4E2D_u7684_u7C7B_u578B_u5339_u914D_u539F_u5219"><a href="#u7F16_u8BD1_u5668_u4E2D_u7684_u7C7B_u578B_u5339_u914D_u539F_u5219" class="headerlink" title="编译器中的类型匹配原则"></a>编译器中的类型匹配原则</h2><blockquote>
+<p>原谅我在末尾加的<code>;</code>，编码习惯而已 = =|| </p>
+</blockquote>
+<p>我们先来看一段代码：</p>
+<pre><code>let a: Int? = nil;
+let b: Int? = 7;
+
+let c = a != nil ? a! : b; // 因为a的默认值为nil，所以c的值为{Some 7}
+let d = a ?? b; // 这里d的值为nil，这是怎么回事？
+</code></pre><p>首先我们需要注意的是，在官方文档中有这么一句话：<code>“The expression b must match the type that is stored inside a”</code>。但是上面的代码示例中，我们的<code>b</code>是<code>Int?</code>类型，那么此时我们的编译器会怎么处理呢？我们通过自己实现一个Nil Coalescing运算符来说明，代码片段如下：</p>
+<pre><code>infix operator ??? {
+    associativity right;
+    precedence 110;
+}
+
+func ???&lt;T&gt;(a: T?, b: @autoclosure () -&gt; T) -&gt; T {
+    return a != nil ? a! : b();
+}
+
+let d = a ??? b; // 这里d的值仍然是nil
+</code></pre><p>从上面的代码片段中我们可以看出，<code>a</code>的类型是根据传入的<code>b</code>的类型决定的，所以当我们传入的<code>b</code>是<code>Int?</code>类型时，编译器其实将<code>a</code>的类型自动转换为<code>Int??</code>类型了，也就是<code>Optional(a)</code>，那么我们就能解释<code>let d = a ?? b;</code>这行代码。因为<code>a == nil</code>但是<code>Optional(a) != nil</code>，所以<code>d = Optional(a)!</code>，<code>d</code>的值为<code>nil</code>。</p>
+<h2 id="Nil_Coalescing_u8FD0_u7B97_u7B26_u8FD4_u56DE_u503C_u7684_u7C7B_u578B"><a href="#Nil_Coalescing_u8FD0_u7B97_u7B26_u8FD4_u56DE_u503C_u7684_u7C7B_u578B" class="headerlink" title="Nil Coalescing运算符返回值的类型"></a>Nil Coalescing运算符返回值的类型</h2><p>我们先看示例代码片段：</p>
+<pre><code>let a: Int? = nil;
+let b: Int? = 5;
+let c: Int? = 6;
+
+// 因为a的默认值为nil，所以将b的值赋值给x，x的值为{Some 5}，类型为Int?
+let x = a != nil ? a! : b;
+// 因为c的值不为nil，所以将c解包后的值赋值给y，但是y的值却是{Some 6}，而不是6，这是怎么回事？
+let y = c != nil ? c! : b;
+</code></pre><p>根据上面我们提到的编译器中类型判断的原则就可以理解了，因为<code>b</code>的类型是<code>Int?</code>，所以在编译时<code>c</code>的类型已经成了<code>Int??</code>,所以为<code>Int??</code>解包的类型就是<code>Int?</code>了。</p>
+<p>如果我们声明变量<code>y</code>的类型，编译器就要提出抗议了：</p>
+<pre><code>// 如何a为Int?类型，那么编译器就不会通过，因为会导致赋值运算符两边类型不等
+let x: Int = a != nil ? a! : b;
+
+// 这种写法和上面一样，都不会编译通过
+let y: Int = a ?? b;
+</code></pre></span>
       
     </div>
 
@@ -303,9 +301,7 @@ diagram.model = new go.GraphLinksModel(
       
         <div class="post-tags">
           
-            <a href="/tags/GOJS/" rel="tag">#GOJS</a>
-          
-            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
+            <a href="/tags/Swift/" rel="tag">#Swift</a>
           
         </div>
       
@@ -314,16 +310,16 @@ diagram.model = new go.GraphLinksModel(
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/articles/2014-06-25-you-should-know-block/" rel="next" title="Objective-C中的Block">
-                <i class="fa fa-chevron-left"></i> Objective-C中的Block
+              <a href="/articles/gojs-shape/" rel="next" title="GOJS教程 -- 如何使用Shape">
+                <i class="fa fa-chevron-left"></i> GOJS教程 -- 如何使用Shape
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/articles/gojs-shape/" rel="prev" title="GOJS教程 -- 如何使用Shape">
-                GOJS教程 -- 如何使用Shape <i class="fa fa-chevron-right"></i>
+              <a href="/articles/hello-world/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -431,7 +427,7 @@ diagram.model = new go.GraphLinksModel(
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#u4E00_u4E2A_u7B80_u5355_u7684gojs_u56FE_u8868"><span class="nav-number">1.</span> <span class="nav-text">一个简单的gojs图表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gojs_u7684_u57FA_u672C_u6982_u5FF5"><span class="nav-number">2.</span> <span class="nav-text">gojs的基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Diagram_u9ED8_u8BA4_u7684_u4EA4_u4E92_u884C_u4E3A"><span class="nav-number">3.</span> <span class="nav-text">Diagram默认的交互行为</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u521B_u5EFA_u4E00_u4E2ADiagram"><span class="nav-number">4.</span> <span class="nav-text">创建一个Diagram</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#u7F16_u8BD1_u5668_u4E2D_u7684_u7C7B_u578B_u5339_u914D_u539F_u5219"><span class="nav-number">1.</span> <span class="nav-text">编译器中的类型匹配原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nil_Coalescing_u8FD0_u7B97_u7B26_u8FD4_u56DE_u503C_u7684_u7C7B_u578B"><span class="nav-number">2.</span> <span class="nav-text">Nil Coalescing运算符返回值的类型</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
