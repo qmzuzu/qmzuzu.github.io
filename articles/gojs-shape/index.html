@@ -43,18 +43,25 @@
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
 
 
-<meta name="description" content="gojs是一个能够让我们很容易的实现基于html5浏览器绘制具有交互性的图形图表的JavaScript框架。gojs采用了面向对象的编程模式。以图形对象表示绘图模板。以用普通js对象存储数据作为数据模型，然后赋值给图形对象的属性作为数据绑定的模式。gojs同样提供了大量工具类来代表我们的交互行为。我们需要做的就是创建图形对象、构建数据模型、设置属性、绑定数据模型、使用工具类添加行为即可创建出具有丰">
+<meta name="description" content="通过Shape你可以构建一个几何图形，并且可以控制它的形状和轮廓颜色以及填充色等。  
+图形你可以通过Shape.figure属性设置它的形状。让你使用GraphObject.make方法构建时，你可以将形状参数以字符串形式作为第二个参数。你可能还需要通过GraphObject.desiredSize、GraphObject.width、GraphObject.height属性设置Shape的尺寸">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JavaScript图表图形框架 -- GOJS简介">
-<meta property="og:url" content="http://qmzuzu.github.io/articles/gojs-simple-diagram/index.html">
+<meta property="og:title" content="GOJS教程 -- 如何使用Shape">
+<meta property="og:url" content="http://qmzuzu.github.io/articles/gojs-shape/index.html">
 <meta property="og:site_name" content="程序员说">
-<meta property="og:description" content="gojs是一个能够让我们很容易的实现基于html5浏览器绘制具有交互性的图形图表的JavaScript框架。gojs采用了面向对象的编程模式。以图形对象表示绘图模板。以用普通js对象存储数据作为数据模型，然后赋值给图形对象的属性作为数据绑定的模式。gojs同样提供了大量工具类来代表我们的交互行为。我们需要做的就是创建图形对象、构建数据模型、设置属性、绑定数据模型、使用工具类添加行为即可创建出具有丰">
-<meta property="og:image" content="http://www.devtalking.com/postImages/simpleDiagram.jpg">
-<meta property="og:image" content="http://www.devtalking.com/postImages/anotherSimpleDiagram.jpg">
-<meta property="og:updated_time" content="2016-01-01T06:44:03.000Z">
+<meta property="og:description" content="通过Shape你可以构建一个几何图形，并且可以控制它的形状和轮廓颜色以及填充色等。  
+图形你可以通过Shape.figure属性设置它的形状。让你使用GraphObject.make方法构建时，你可以将形状参数以字符串形式作为第二个参数。你可能还需要通过GraphObject.desiredSize、GraphObject.width、GraphObject.height属性设置Shape的尺寸">
+<meta property="og:image" content="http://www.devtalking.com/postImages/shape1.jpg">
+<meta property="og:image" content="http://www.devtalking.com/postImages/shape2.jpg">
+<meta property="og:image" content="http://www.devtalking.com/postImages/shape3.jpg">
+<meta property="og:image" content="http://www.devtalking.com/postImages/shape4.jpg">
+<meta property="og:image" content="http://www.devtalking.com/postImages/shape5.jpg">
+<meta property="og:image" content="http://www.devtalking.com/postImages/shape6.jpg">
+<meta property="og:updated_time" content="2016-01-01T06:50:54.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JavaScript图表图形框架 -- GOJS简介">
-<meta name="twitter:description" content="gojs是一个能够让我们很容易的实现基于html5浏览器绘制具有交互性的图形图表的JavaScript框架。gojs采用了面向对象的编程模式。以图形对象表示绘图模板。以用普通js对象存储数据作为数据模型，然后赋值给图形对象的属性作为数据绑定的模式。gojs同样提供了大量工具类来代表我们的交互行为。我们需要做的就是创建图形对象、构建数据模型、设置属性、绑定数据模型、使用工具类添加行为即可创建出具有丰">
+<meta name="twitter:title" content="GOJS教程 -- 如何使用Shape">
+<meta name="twitter:description" content="通过Shape你可以构建一个几何图形，并且可以控制它的形状和轮廓颜色以及填充色等。  
+图形你可以通过Shape.figure属性设置它的形状。让你使用GraphObject.make方法构建时，你可以将形状参数以字符串形式作为第二个参数。你可能还需要通过GraphObject.desiredSize、GraphObject.width、GraphObject.height属性设置Shape的尺寸">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -66,7 +73,7 @@
 
 
 
-  <title> JavaScript图表图形框架 -- GOJS简介 | 程序员说 </title>
+  <title> GOJS教程 -- 如何使用Shape | 程序员说 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="">
@@ -181,7 +188,7 @@
             
             
               
-                JavaScript图表图形框架 -- GOJS简介
+                GOJS教程 -- 如何使用Shape
               
             
           </h1>
@@ -190,8 +197,8 @@
         <div class="post-meta">
           <span class="post-time">
             發表於
-            <time itemprop="dateCreated" datetime="2014-07-18T00:00:00+08:00" content="2014-07-18">
-              2014-07-18
+            <time itemprop="dateCreated" datetime="2014-07-21T00:00:00+08:00" content="2014-07-21">
+              2014-07-21
             </time>
           </span>
 
@@ -214,87 +221,122 @@
       
 
       
-        <span itemprop="articleBody"><p>gojs是一个能够让我们很容易的实现基于html5浏览器绘制具有交互性的图形图表的JavaScript框架。<br>gojs采用了面向对象的编程模式。以图形对象表示绘图模板。以用普通js对象存储数据作为数据模型，然后赋值给图形对象的属性作为数据绑定的模式。gojs同样提供了大量工具类来代表我们的交互行为。我们需要做的就是创建图形对象、构建数据模型、设置属性、绑定数据模型、使用工具类添加行为即可创建出具有丰富交互性能的各种图表。 </p>
-<h2 id="u4E00_u4E2A_u7B80_u5355_u7684gojs_u56FE_u8868"><a href="#u4E00_u4E2A_u7B80_u5355_u7684gojs_u56FE_u8868" class="headerlink" title="一个简单的gojs图表"></a>一个简单的gojs图表</h2><p>下面的代码定义了一个<code>node</code>模板和数据模型，并它们构建了一个简单的图表：  </p>
-<pre><code>// For conciseness. See the &quot;Building Parts&quot; intro page for more
-var $ = go.GraphObject.make;
-
-// the node template describes how each Node should be constructed
-diagram.nodeTemplate =
-  $(go.Node, &quot;Auto&quot;,  // the Shape automatically fits around the TextBlock
-    $(go.Shape, &quot;RoundedRectangle&quot;,
-      // bind Shape.fill to Node.data.color
-      new go.Binding(&quot;fill&quot;, &quot;color&quot;)),
-    $(go.TextBlock,
-      { margin: 3 },  // some room around the text
-      // bind TextBlock.text to Node.data.key
-      new go.Binding(&quot;text&quot;, &quot;key&quot;))
-  );
-
-// the Model holds only the essential information describing the diagram
-diagram.model = new go.GraphLinksModel(
-[ // a JavaScript Array of JavaScript objects, one per node
-  { key: &quot;Alpha&quot;, color: &quot;lightblue&quot; },
-  { key: &quot;Beta&quot;, color: &quot;orange&quot; },
-  { key: &quot;Gamma&quot;, color: &quot;lightgreen&quot; },
-  { key: &quot;Delta&quot;, color: &quot;pink&quot; }
-],
-[ // a JavaScript Array of JavaScript objects, one per link
-  { from: &quot;Alpha&quot;, to: &quot;Beta&quot; },
-  { from: &quot;Alpha&quot;, to: &quot;Gamma&quot; },
-  { from: &quot;Beta&quot;, to: &quot;Beta&quot; },
-  { from: &quot;Gamma&quot;, to: &quot;Delta&quot; },
-  { from: &quot;Delta&quot;, to: &quot;Alpha&quot; }
-]);
-
-diagram.initialContentAlignment = go.Spot.Center;
-// enable Ctrl-Z to undo and Ctrl-Y to redo
-diagram.undoManager.isEnabled = true;
-</code></pre><p>结果：<br><img src="http://www.devtalking.com/postImages/simpleDiagram.jpg" alt="Diagram">   </p>
-<p>虽然上面展示的是图片，但是实际上我们可以在这个图表上用鼠标中键滚动、选中、删除、重做、撤销等等交互。</p>
-<h2 id="gojs_u7684_u57FA_u672C_u6982_u5FF5"><a href="#gojs_u7684_u57FA_u672C_u6982_u5FF5" class="headerlink" title="gojs的基本概念"></a>gojs的基本概念</h2><p>上面的示例是让我们先在感官上认知一下gojs的产出物，下面我们来阐述一下gojs的基本概念。  </p>
-<p>gojs绘制的图表（<code>Diagram</code>）具有两个最基本的元素，就是点和线（<code>Node</code>和<code>Link</code>），并且他们可以自由组合组成一个组（<code>Group</code>）。所有的元素都处在图层（<code>Layer</code>）上，并且可以对它们进行布局（<code>Layout</code>）。  </p>
-<p>每个<code>Diagram</code>都是通过数据模型（<code>Model</code>）来填充和确定<code>Node</code>的信息和<code>Link</code>的所属关系的。并且我们只需要创建好<code>Node</code>和<code>Link</code>的模板以及数据模型，其他的是事情都交给gojs去处理。它会通过<code>Model.nodeDataArray</code>方法和<code>GraphLinksModel.linkDataArray</code>方法自动加载模型并构建元素。  </p>
-<p>每一个<code>Node</code>和<code>Link</code>都是通过模板来描述他们的文本、形状、颜色等信息以及交互行为。每个模板其实就是一个面板（<code>Panel</code>）（你可以将各种元素自由组合在它里面，也可以在它里面添加各种交互行为），比如说将<code>TextBlock</code>、<code>Shape</code>、<code>Picture</code>等元素添加到这个<code>Panel</code>中，鼠标进入离开的交互行为也可以添加到<code>Panel</code>中，那么这个<code>Panel</code>就是一个模板。</p>
-<p>每个<code>Node</code>的位置可以使用<code>Diagram.layout</code>或<code>Group.layout</code>进行初始化设置，也可以基于交互行为进行拖拽。  </p>
-<p>gojs里的工具类可以为<code>Diagram</code>添加鼠标、键盘事件。一般情况下<code>Diagram</code>都默认设置了几种交互行为，比如说拖拽、连线。我们也可以通过<code>ToolManager</code>对象来管理工具类，或者说来管理交互行为，比如说可以停止某些交互，或开启某些交互等。  </p>
-<p>每个<code>Diagram</code>同时也包含<code>CommandHandler</code>对象，它的作用是添加一些键盘命令，比如点<code>Delete</code>键删除元素，<code>Ctrl+C</code>复制、<code>Ctrl+V</code>粘贴、<code>Ctrl+Z</code>撤销等。但是<code>CommandHandler</code>也是被<code>ToolManager</code>管理的。  </p>
-<p><code>Diagram</code>也提供通过鼠标中键滚动视图、放大缩小视图。</p>
-<p>gojs还提供了图表的预览视图（<code>Overview</code>），用于了解大规模图表的概况，同时还提供了组件管理面板（<code>Palette</code>），用于管理创建的组件，并且支持将组件拖拽到<code>Diagram</code>中。</p>
-<p>在<code>Diagram</code>中，你可以选中<code>Node</code>或者<code>Link</code>，你会发现他们有少许的变化，比如在<code>Node</code>周围会增加选中框，选中<code>Link</code>会变色等。这些都是由<code>Adornment</code>对象控制的，你还可以用它来增加提示框、右键菜单等。</p>
-<h2 id="Diagram_u9ED8_u8BA4_u7684_u4EA4_u4E92_u884C_u4E3A"><a href="#Diagram_u9ED8_u8BA4_u7684_u4EA4_u4E92_u884C_u4E3A" class="headerlink" title="Diagram默认的交互行为"></a>Diagram默认的交互行为</h2><ul>
-<li>选中<code>Node</code>或者<code>Link</code>，会出现蓝色选中框，<code>Link</code>也会变为蓝色。</li>
-<li>使用<code>Ctrl+鼠标左键</code>可以选中多个元素。</li>
-<li>在<code>Panel</code>中点击鼠标左键移动鼠标可以移动所有元素。</li>
-<li>使用<code>Ctrl+A</code>可以选中所有元素。</li>
-<li>选中元素，用鼠标可以拖动元素。</li>
-<li>使用<code>Ctrl+C</code>/<code>Ctrl+V</code>可以复制粘贴元素。</li>
-<li>使用<code>Delete</code>键可以删除元素。</li>
-<li>选中多个元素，然后使用<code>Ctrl+G</code>可以将这些选中的元素组合成一个组。</li>
-<li>使用<code>Ctrl+Shift+G</code>可以拆散组。</li>
-<li>当元素超出<code>Diagram</code>时，可自动出现滚动条。</li>
-<li>用鼠标拖拽<code>Node</code>边缘可以与其他<code>Node</code>进行连线。</li>
-<li>选中<code>Link</code>，可以重新选择目标<code>Node</code>，即可以重新连线。</li>
-</ul>
-<h2 id="u521B_u5EFA_u4E00_u4E2ADiagram"><a href="#u521B_u5EFA_u4E00_u4E2ADiagram" class="headerlink" title="创建一个Diagram"></a>创建一个Diagram</h2><p>每个<code>Diagram</code>都需要依托与一个HTML的<code>DIV</code>元素，虽然由gojs接管了这个<code>DIV</code>，但是<code>DIV</code>本身的属性依然可以由我们通过CSS设置，比如位置、高宽等。gojs实际上是在<code>DIV</code>中创建了一个<code>Canvas</code>元素，<code>Canvas</code>的高宽自动适配<code>DIV</code>的高宽。</p>
-<pre><code>&lt;!-- The DIV for a Diagram needs an explicit size or else we won&apos;t see anything.
- In this case we also add a border to help see the edges. --&gt;
-&lt;div id=&quot;myDiagramDiv&quot; style=&quot;border: solid 1px blue; width:400px; height:150px&quot;&gt;&lt;/div&gt;
-</code></pre><p>当然，当你准备开始创建<code>Diagram</code>前，首先要导入gojs的文件。gojs的文件分为Develop（<code>gojs-debug.js</code>）和Product（<code>gojs.js</code>）两种，前者是供开发人员使用的，因为它包含了一些用于调试的代码，后者用于正式发布，速度较快。gojs不依赖与任何JavaScript框架，所以它可以与任何JavaScript框架一起使用，而不会产生冲突。</p>
-<pre><code>&lt;!-- Include the GoJS library. --&gt;
-&lt;script src=&quot;gojs.js&quot;&gt;&lt;/script&gt;
-</code></pre><p>下面就可以使用gojs将上述的<code>DIV</code>构建为一个<code>Diagram</code>了，这里需要注意的是，使用gojs的api时，都要使用前缀<code>go.</code>。</p>
-<pre><code>&lt;!-- Create the Diagram in the DIV element using JavaScript. --&gt;
-&lt;!-- The &quot;go&quot; object is the &quot;namespace&quot; that holds all of the GoJS types. --&gt;
-&lt;script&gt;
-var diagram = new go.Diagram(&quot;myDiagramDiv&quot;);
-diagram.model = new go.GraphLinksModel(
-    [{ key: &quot;Hello&quot; },   // two node data, in an Array
-    { key: &quot;World!&quot; }],
-    [{ from: &quot;Hello&quot;, to: &quot;World!&quot;}]  // one link, in an Array
-);
-&lt;/script&gt;
-</code></pre><p>这样就构建了一个简单的<code>Diagram</code>。<br><img src="http://www.devtalking.com/postImages/anotherSimpleDiagram.jpg" alt="Diagram"></p>
+        <span itemprop="articleBody"><p>通过<code>Shape</code>你可以构建一个几何图形，并且可以控制它的形状和轮廓颜色以及填充色等。  </p>
+<h2 id="u56FE_u5F62"><a href="#u56FE_u5F62" class="headerlink" title="图形"></a>图形</h2><p>你可以通过<code>Shape.figure</code>属性设置它的形状。让你使用<code>GraphObject.make</code>方法构建时，你可以将形状参数以字符串形式作为第二个参数。你可能还需要通过<code>GraphObject.desiredSize</code>、<code>GraphObject.width</code>、<code>GraphObject.height</code>属性设置<code>Shape</code>的尺寸大小。  </p>
+<p>下面的例子中列出了一些常用的<code>Shape</code>形状，并且你可以看到它们的名字：</p>
+<pre><code>diagram.add(
+$(go.Part, &quot;Horizontal&quot;,
+  $(go.Shape, &quot;Rectangle&quot;,
+              { width: 40, height: 60, margin: 4, fill: null }),
+  $(go.Shape, &quot;RoundedRectangle&quot;,
+              { width: 40, height: 60, margin: 4, fill: null }),
+  $(go.Shape, &quot;Ellipse&quot;,
+              { width: 40, height: 60, margin: 4, fill: null }),
+  $(go.Shape, &quot;Triangle&quot;,
+              { width: 40, height: 60, margin: 4, fill: null }),
+  $(go.Shape, &quot;Diamond&quot;,
+              { width: 40, height: 60, margin: 4, fill: null })
+));
+</code></pre><p>结果：<br><img src="http://www.devtalking.com/postImages/shape1.jpg" alt="shape"></p>
+<h2 id="u586B_u5145_u8272_u4E0E_u8F6E_u5ED3"><a href="#u586B_u5145_u8272_u4E0E_u8F6E_u5ED3" class="headerlink" title="填充色与轮廓"></a>填充色与轮廓</h2><p>可以通过<code>Shape.stroke</code>属性设置<code>Shape</code>的轮廓线条颜色。通过<code>Shape.strokeWidth</code>设置轮廓线条的粗细度。通过<code>Shape.fill</code>属性设置填充颜色。  </p>
+<pre><code>diagram.add(
+$(go.Part, &quot;Horizontal&quot;,
+  $(go.Shape, { figure: &quot;Club&quot;, width: 40, height: 40, margin: 4
+                }),  // default fill and stroke are &quot;black&quot;
+  $(go.Shape, { figure: &quot;Club&quot;, width: 40, height: 40, margin: 4,
+                fill: &quot;green&quot; }),
+  $(go.Shape, { figure: &quot;Club&quot;, width: 40, height: 40, margin: 4,
+                fill: &quot;green&quot;, stroke: null }),
+  $(go.Shape, { figure: &quot;Club&quot;, width: 40, height: 40, margin: 4,
+                fill: null, stroke: &quot;green&quot; }),
+  $(go.Shape, { figure: &quot;Club&quot;, width: 40, height: 40, margin: 4,
+                fill: null, stroke: &quot;green&quot;, strokeWidth: 3 }),
+  $(go.Shape, { figure: &quot;Club&quot;, width: 40, height: 40, margin: 4,
+                fill: null, stroke: &quot;green&quot;, strokeWidth: 6 }),
+  $(go.Shape, { figure: &quot;Club&quot;, width: 40, height: 40, margin: 4,
+                fill: &quot;green&quot;, background: &quot;orange&quot; })
+));
+</code></pre><p>结果：<br><img src="http://www.devtalking.com/postImages/shape2.jpg" alt="shape"></p>
+<p><code>Shape.stroke</code>和<code>Shape.fill</code>属性的值一般使用CSS设置，它们的默认颜色都是黑色。但是我们最常用的还是将它们设置为<code>null</code>或<code>transparent</code>，前者意思是空，后者是透明，在表象上，这两者是没有差距的，但是在点击行为上有区别。如果设置为<code>null</code>，那么只能点击图形的轮廓才能选中，点击图形里面是无法选中的。而如设置为<code>transparent</code>，点击图形的任何地方都可以选中该图形。  </p>
+<pre><code>diagram.add(
+$(go.Part, &quot;Table&quot;,
+  $(go.Shape, { row: 0, column: 0, figure: &quot;Club&quot;, width: 40, height: 40, margin: 4,
+                fill: &quot;green&quot; }),
+  $(go.TextBlock, &quot;green&quot;, { row: 1, column: 0 }),
+  $(go.Shape, { row: 0, column: 1, figure: &quot;Club&quot;, width: 40, height: 40, margin: 4,
+                fill: &quot;white&quot; }),
+  $(go.TextBlock, &quot;white&quot;, { row: 1, column: 1 }),
+  $(go.Shape, { row: 0, column: 2, figure: &quot;Club&quot;, width: 40, height: 40, margin: 4,
+                fill: &quot;transparent&quot; }),
+  $(go.TextBlock, &quot;transparent&quot;, { row: 1, column: 2 }),
+  $(go.Shape, { row: 0, column: 3, figure: &quot;Club&quot;, width: 40, height: 40, margin: 4,
+                fill: null }),
+  $(go.TextBlock, &quot;null&quot;, { row: 1, column: 3 })
+));
+</code></pre><p>结果：<br><img src="http://www.devtalking.com/postImages/shape3.jpg" alt="shape"></p>
+<h2 id="u51E0_u4F55_u5F62_u72B6"><a href="#u51E0_u4F55_u5F62_u72B6" class="headerlink" title="几何形状"></a>几何形状</h2><p>形状其实就是若干个不同坐标的点，然后被线连起来形成的。上述的例子中，我们使用的都是gojs定义好的一些形成，然而gojs也支持用户自定义形状，可以使用<code>Shape.geometry</code>属性。可以通过<code>Geometry.parse</code>来创建一个几何图形，不过<code>Geometry</code>的表达式交为复杂，我们将在后期对其进行详细的介绍。  </p>
+<p>下面的例子中，我们展示了通过<code>Geometry.parse</code>方法创建自定义“W”几何图形的过程：</p>
+<pre><code>var W_geometry = go.Geometry.parse(&quot;M 0,0 L 10,50 20,10 30,50 40,0&quot;, false);
+diagram.add(
+$(go.Part, &quot;Horizontal&quot;,
+  $(go.Shape, { geometry: W_geometry, strokeWidth: 2 }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;blue&quot;, strokeWidth: 10,
+                strokeJoin: &quot;miter&quot;, strokeCap: &quot;butt&quot; }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;blue&quot;, strokeWidth: 10,
+                strokeJoin: &quot;miter&quot;, strokeCap: &quot;round&quot; }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;blue&quot;, strokeWidth: 10,
+                strokeJoin: &quot;miter&quot;, strokeCap: &quot;square&quot; }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;green&quot;, strokeWidth: 10,
+                strokeJoin: &quot;bevel&quot;, strokeCap: &quot;butt&quot; }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;green&quot;, strokeWidth: 10,
+                strokeJoin: &quot;bevel&quot;, strokeCap: &quot;round&quot; }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;green&quot;, strokeWidth: 10,
+                strokeJoin: &quot;bevel&quot;, strokeCap: &quot;square&quot; }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;red&quot;, strokeWidth: 10,
+                strokeJoin: &quot;round&quot;, strokeCap: &quot;butt&quot; }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;red&quot;, strokeWidth: 10,
+                strokeJoin: &quot;round&quot;, strokeCap: &quot;round&quot; }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;red&quot;, strokeWidth: 10,
+                strokeJoin: &quot;round&quot;, strokeCap: &quot;square&quot; }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;purple&quot;, strokeWidth: 2,
+                strokeDashArray: [4, 2] }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;purple&quot;, strokeWidth: 2,
+                strokeDashArray: [6, 6, 2, 2] })
+));
+</code></pre><p>结果：<br><img src="http://www.devtalking.com/postImages/shape4.jpg" alt="shape"></p>
+<h2 id="u89D2_u5EA6_u548C_u6BD4_u4F8B"><a href="#u89D2_u5EA6_u548C_u6BD4_u4F8B" class="headerlink" title="角度和比例"></a>角度和比例</h2><p>除了通过<code>GraphObject.desiredSize</code>，<code>GraphObject.width</code>，<code>GraphObject.height</code>这几个属性设置<code>Shape</code>的尺寸大小外，还可以使用<code>GraphObject.angle</code>和<code>GraphObject.scale</code>属性设置<code>Shape</code>的角度和比例。   </p>
+<pre><code>diagram.add(
+$(go.Part, &quot;Table&quot;,
+  $(go.Shape, { row: 0, column: 1,
+                figure: &quot;Club&quot;, fill: &quot;green&quot;, width: 40, height: 40,
+                }),  // default angle is zero; default scale is one
+  $(go.Shape, { row: 0, column: 2,
+                figure: &quot;Club&quot;, fill: &quot;green&quot;, width: 40, height: 40,
+                angle: 30 }),
+  $(go.Shape, { row: 0, column: 3,
+                figure: &quot;Club&quot;, fill: &quot;green&quot;, width: 40, height: 40,
+                scale: 1.5 }),
+  $(go.Shape, { row: 0, column: 4,
+                figure: &quot;Club&quot;, fill: &quot;green&quot;, width: 40, height: 40,
+                angle: 30, scale: 1.5 })
+));
+</code></pre><p>结果：<br><img src="http://www.devtalking.com/postImages/shape5.jpg" alt="shape"></p>
+<p>下面的例子中，将<code>Shape.fill</code>的属性设置为<code>Brush</code>画笔对象，并使用了线性渐变画笔给<code>Shape</code>填充颜色。    </p>
+<pre><code>diagram.add(
+$(go.Part, &quot;Table&quot;,
+  $(go.Shape, { row: 0, column: 0,
+                figure: &quot;Club&quot;, width: 40, height: 40, angle: 0, scale: 1.5,
+                fill: $(go.Brush, go.Brush.Linear, { 0.0: &quot;blue&quot;, 1.0: &quot;red&quot; }),
+                background: $(go.Brush, go.Brush.Linear, { 0.0: &quot;yellow&quot;, 1.0: &quot;green&quot; }),
+                areaBackground: $(go.Brush, go.Brush.Linear, { 0.0: &quot;gray&quot;, 1.0: &quot;lightgray&quot; }) }),
+  $(go.Shape, { row: 0, column: 1, width: 10, fill: null, stroke: null }),
+  $(go.Shape, { row: 0, column: 2,
+                figure: &quot;Club&quot;, width: 40, height: 40, angle: 45, scale: 1.5,
+                fill: $(go.Brush, go.Brush.Linear, { 0.0: &quot;blue&quot;, 1.0: &quot;red&quot; }),
+                background: $(go.Brush, go.Brush.Linear, { 0.0: &quot;yellow&quot;, 1.0: &quot;green&quot; }),
+                areaBackground: $(go.Brush, go.Brush.Linear, { 0.0: &quot;black&quot;, 1.0: &quot;lightgray&quot; }) })
+));
+</code></pre><p>结果：<br><img src="http://www.devtalking.com/postImages/shape6.jpg" alt="shape"></p>
 </span>
       
     </div>
@@ -314,16 +356,16 @@ diagram.model = new go.GraphLinksModel(
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/articles/2014-06-25-you-should-know-block/" rel="next" title="Objective-C中的Block">
-                <i class="fa fa-chevron-left"></i> Objective-C中的Block
+              <a href="/articles/gojs-simple-diagram/" rel="next" title="JavaScript图表图形框架 -- GOJS简介">
+                <i class="fa fa-chevron-left"></i> JavaScript图表图形框架 -- GOJS简介
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/articles/gojs-shape/" rel="prev" title="GOJS教程 -- 如何使用Shape">
-                GOJS教程 -- 如何使用Shape <i class="fa fa-chevron-right"></i>
+              <a href="/articles/hello-world/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -431,7 +473,7 @@ diagram.model = new go.GraphLinksModel(
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#u4E00_u4E2A_u7B80_u5355_u7684gojs_u56FE_u8868"><span class="nav-number">1.</span> <span class="nav-text">一个简单的gojs图表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gojs_u7684_u57FA_u672C_u6982_u5FF5"><span class="nav-number">2.</span> <span class="nav-text">gojs的基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Diagram_u9ED8_u8BA4_u7684_u4EA4_u4E92_u884C_u4E3A"><span class="nav-number">3.</span> <span class="nav-text">Diagram默认的交互行为</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u521B_u5EFA_u4E00_u4E2ADiagram"><span class="nav-number">4.</span> <span class="nav-text">创建一个Diagram</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#u56FE_u5F62"><span class="nav-number">1.</span> <span class="nav-text">图形</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u586B_u5145_u8272_u4E0E_u8F6E_u5ED3"><span class="nav-number">2.</span> <span class="nav-text">填充色与轮廓</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u51E0_u4F55_u5F62_u72B6"><span class="nav-number">3.</span> <span class="nav-text">几何形状</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u89D2_u5EA6_u548C_u6BD4_u4F8B"><span class="nav-number">4.</span> <span class="nav-text">角度和比例</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

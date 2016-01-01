@@ -531,6 +531,197 @@
             
             
               
+                <a class="post-title-link" href="/articles/gojs-shape/" itemprop="url">
+                  GOJS教程 -- 如何使用Shape
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2014-07-21T00:00:00+08:00" content="2014-07-21">
+              2014-07-21
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>通过<code>Shape</code>你可以构建一个几何图形，并且可以控制它的形状和轮廓颜色以及填充色等。  </p>
+<h2 id="u56FE_u5F62"><a href="#u56FE_u5F62" class="headerlink" title="图形"></a>图形</h2><p>你可以通过<code>Shape.figure</code>属性设置它的形状。让你使用<code>GraphObject.make</code>方法构建时，你可以将形状参数以字符串形式作为第二个参数。你可能还需要通过<code>GraphObject.desiredSize</code>、<code>GraphObject.width</code>、<code>GraphObject.height</code>属性设置<code>Shape</code>的尺寸大小。  </p>
+<p>下面的例子中列出了一些常用的<code>Shape</code>形状，并且你可以看到它们的名字：</p>
+<pre><code>diagram.add(
+$(go.Part, &quot;Horizontal&quot;,
+  $(go.Shape, &quot;Rectangle&quot;,
+              { width: 40, height: 60, margin: 4, fill: null }),
+  $(go.Shape, &quot;RoundedRectangle&quot;,
+              { width: 40, height: 60, margin: 4, fill: null }),
+  $(go.Shape, &quot;Ellipse&quot;,
+              { width: 40, height: 60, margin: 4, fill: null }),
+  $(go.Shape, &quot;Triangle&quot;,
+              { width: 40, height: 60, margin: 4, fill: null }),
+  $(go.Shape, &quot;Diamond&quot;,
+              { width: 40, height: 60, margin: 4, fill: null })
+));
+</code></pre><p>结果：<br><img src="http://www.devtalking.com/postImages/shape1.jpg" alt="shape"></p>
+<h2 id="u586B_u5145_u8272_u4E0E_u8F6E_u5ED3"><a href="#u586B_u5145_u8272_u4E0E_u8F6E_u5ED3" class="headerlink" title="填充色与轮廓"></a>填充色与轮廓</h2><p>可以通过<code>Shape.stroke</code>属性设置<code>Shape</code>的轮廓线条颜色。通过<code>Shape.strokeWidth</code>设置轮廓线条的粗细度。通过<code>Shape.fill</code>属性设置填充颜色。  </p>
+<pre><code>diagram.add(
+$(go.Part, &quot;Horizontal&quot;,
+  $(go.Shape, { figure: &quot;Club&quot;, width: 40, height: 40, margin: 4
+                }),  // default fill and stroke are &quot;black&quot;
+  $(go.Shape, { figure: &quot;Club&quot;, width: 40, height: 40, margin: 4,
+                fill: &quot;green&quot; }),
+  $(go.Shape, { figure: &quot;Club&quot;, width: 40, height: 40, margin: 4,
+                fill: &quot;green&quot;, stroke: null }),
+  $(go.Shape, { figure: &quot;Club&quot;, width: 40, height: 40, margin: 4,
+                fill: null, stroke: &quot;green&quot; }),
+  $(go.Shape, { figure: &quot;Club&quot;, width: 40, height: 40, margin: 4,
+                fill: null, stroke: &quot;green&quot;, strokeWidth: 3 }),
+  $(go.Shape, { figure: &quot;Club&quot;, width: 40, height: 40, margin: 4,
+                fill: null, stroke: &quot;green&quot;, strokeWidth: 6 }),
+  $(go.Shape, { figure: &quot;Club&quot;, width: 40, height: 40, margin: 4,
+                fill: &quot;green&quot;, background: &quot;orange&quot; })
+));
+</code></pre><p>结果：<br><img src="http://www.devtalking.com/postImages/shape2.jpg" alt="shape"></p>
+<p><code>Shape.stroke</code>和<code>Shape.fill</code>属性的值一般使用CSS设置，它们的默认颜色都是黑色。但是我们最常用的还是将它们设置为<code>null</code>或<code>transparent</code>，前者意思是空，后者是透明，在表象上，这两者是没有差距的，但是在点击行为上有区别。如果设置为<code>null</code>，那么只能点击图形的轮廓才能选中，点击图形里面是无法选中的。而如设置为<code>transparent</code>，点击图形的任何地方都可以选中该图形。  </p>
+<pre><code>diagram.add(
+$(go.Part, &quot;Table&quot;,
+  $(go.Shape, { row: 0, column: 0, figure: &quot;Club&quot;, width: 40, height: 40, margin: 4,
+                fill: &quot;green&quot; }),
+  $(go.TextBlock, &quot;green&quot;, { row: 1, column: 0 }),
+  $(go.Shape, { row: 0, column: 1, figure: &quot;Club&quot;, width: 40, height: 40, margin: 4,
+                fill: &quot;white&quot; }),
+  $(go.TextBlock, &quot;white&quot;, { row: 1, column: 1 }),
+  $(go.Shape, { row: 0, column: 2, figure: &quot;Club&quot;, width: 40, height: 40, margin: 4,
+                fill: &quot;transparent&quot; }),
+  $(go.TextBlock, &quot;transparent&quot;, { row: 1, column: 2 }),
+  $(go.Shape, { row: 0, column: 3, figure: &quot;Club&quot;, width: 40, height: 40, margin: 4,
+                fill: null }),
+  $(go.TextBlock, &quot;null&quot;, { row: 1, column: 3 })
+));
+</code></pre><p>结果：<br><img src="http://www.devtalking.com/postImages/shape3.jpg" alt="shape"></p>
+<h2 id="u51E0_u4F55_u5F62_u72B6"><a href="#u51E0_u4F55_u5F62_u72B6" class="headerlink" title="几何形状"></a>几何形状</h2><p>形状其实就是若干个不同坐标的点，然后被线连起来形成的。上述的例子中，我们使用的都是gojs定义好的一些形成，然而gojs也支持用户自定义形状，可以使用<code>Shape.geometry</code>属性。可以通过<code>Geometry.parse</code>来创建一个几何图形，不过<code>Geometry</code>的表达式交为复杂，我们将在后期对其进行详细的介绍。  </p>
+<p>下面的例子中，我们展示了通过<code>Geometry.parse</code>方法创建自定义“W”几何图形的过程：</p>
+<pre><code>var W_geometry = go.Geometry.parse(&quot;M 0,0 L 10,50 20,10 30,50 40,0&quot;, false);
+diagram.add(
+$(go.Part, &quot;Horizontal&quot;,
+  $(go.Shape, { geometry: W_geometry, strokeWidth: 2 }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;blue&quot;, strokeWidth: 10,
+                strokeJoin: &quot;miter&quot;, strokeCap: &quot;butt&quot; }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;blue&quot;, strokeWidth: 10,
+                strokeJoin: &quot;miter&quot;, strokeCap: &quot;round&quot; }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;blue&quot;, strokeWidth: 10,
+                strokeJoin: &quot;miter&quot;, strokeCap: &quot;square&quot; }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;green&quot;, strokeWidth: 10,
+                strokeJoin: &quot;bevel&quot;, strokeCap: &quot;butt&quot; }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;green&quot;, strokeWidth: 10,
+                strokeJoin: &quot;bevel&quot;, strokeCap: &quot;round&quot; }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;green&quot;, strokeWidth: 10,
+                strokeJoin: &quot;bevel&quot;, strokeCap: &quot;square&quot; }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;red&quot;, strokeWidth: 10,
+                strokeJoin: &quot;round&quot;, strokeCap: &quot;butt&quot; }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;red&quot;, strokeWidth: 10,
+                strokeJoin: &quot;round&quot;, strokeCap: &quot;round&quot; }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;red&quot;, strokeWidth: 10,
+                strokeJoin: &quot;round&quot;, strokeCap: &quot;square&quot; }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;purple&quot;, strokeWidth: 2,
+                strokeDashArray: [4, 2] }),
+  $(go.Shape, { geometry: W_geometry, stroke: &quot;purple&quot;, strokeWidth: 2,
+                strokeDashArray: [6, 6, 2, 2] })
+));
+</code></pre><p>结果：<br><img src="http://www.devtalking.com/postImages/shape4.jpg" alt="shape"></p>
+<h2 id="u89D2_u5EA6_u548C_u6BD4_u4F8B"><a href="#u89D2_u5EA6_u548C_u6BD4_u4F8B" class="headerlink" title="角度和比例"></a>角度和比例</h2><p>除了通过<code>GraphObject.desiredSize</code>，<code>GraphObject.width</code>，<code>GraphObject.height</code>这几个属性设置<code>Shape</code>的尺寸大小外，还可以使用<code>GraphObject.angle</code>和<code>GraphObject.scale</code>属性设置<code>Shape</code>的角度和比例。   </p>
+<pre><code>diagram.add(
+$(go.Part, &quot;Table&quot;,
+  $(go.Shape, { row: 0, column: 1,
+                figure: &quot;Club&quot;, fill: &quot;green&quot;, width: 40, height: 40,
+                }),  // default angle is zero; default scale is one
+  $(go.Shape, { row: 0, column: 2,
+                figure: &quot;Club&quot;, fill: &quot;green&quot;, width: 40, height: 40,
+                angle: 30 }),
+  $(go.Shape, { row: 0, column: 3,
+                figure: &quot;Club&quot;, fill: &quot;green&quot;, width: 40, height: 40,
+                scale: 1.5 }),
+  $(go.Shape, { row: 0, column: 4,
+                figure: &quot;Club&quot;, fill: &quot;green&quot;, width: 40, height: 40,
+                angle: 30, scale: 1.5 })
+));
+</code></pre><p>结果：<br><img src="http://www.devtalking.com/postImages/shape5.jpg" alt="shape"></p>
+<p>下面的例子中，将<code>Shape.fill</code>的属性设置为<code>Brush</code>画笔对象，并使用了线性渐变画笔给<code>Shape</code>填充颜色。    </p>
+<pre><code>diagram.add(
+$(go.Part, &quot;Table&quot;,
+  $(go.Shape, { row: 0, column: 0,
+                figure: &quot;Club&quot;, width: 40, height: 40, angle: 0, scale: 1.5,
+                fill: $(go.Brush, go.Brush.Linear, { 0.0: &quot;blue&quot;, 1.0: &quot;red&quot; }),
+                background: $(go.Brush, go.Brush.Linear, { 0.0: &quot;yellow&quot;, 1.0: &quot;green&quot; }),
+                areaBackground: $(go.Brush, go.Brush.Linear, { 0.0: &quot;gray&quot;, 1.0: &quot;lightgray&quot; }) }),
+  $(go.Shape, { row: 0, column: 1, width: 10, fill: null, stroke: null }),
+  $(go.Shape, { row: 0, column: 2,
+                figure: &quot;Club&quot;, width: 40, height: 40, angle: 45, scale: 1.5,
+                fill: $(go.Brush, go.Brush.Linear, { 0.0: &quot;blue&quot;, 1.0: &quot;red&quot; }),
+                background: $(go.Brush, go.Brush.Linear, { 0.0: &quot;yellow&quot;, 1.0: &quot;green&quot; }),
+                areaBackground: $(go.Brush, go.Brush.Linear, { 0.0: &quot;black&quot;, 1.0: &quot;lightgray&quot; }) })
+));
+</code></pre><p>结果：<br><img src="http://www.devtalking.com/postImages/shape6.jpg" alt="shape"></p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 <a class="post-title-link" href="/articles/gojs-simple-diagram/" itemprop="url">
                   JavaScript图表图形框架 -- GOJS简介
                 </a>
@@ -1082,7 +1273,7 @@ void doBlockA() {
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
